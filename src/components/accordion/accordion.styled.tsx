@@ -49,7 +49,7 @@ const AccordionBody = styled.div`
     font-size: 14px;
     background-color: #f0f0f0;
     backdrop-filter: blur(5px);
-    scroll-behaviour: smooth;
+    scroll-behavior: smooth;
     overflow-y: scroll;
 `;
 

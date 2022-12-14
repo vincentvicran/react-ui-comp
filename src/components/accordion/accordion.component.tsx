@@ -12,7 +12,6 @@ import {
     AccordionHeaderContent,
     AccordionBodyContent,
 } from './accordion.styled';
-import { AccordionProps, AccordionItemProps } from './accordion.type';
 
 const AccordionContentAnimated = makeAnimatedComponent(AccordionContent);
 const AccordionHeaderAnimated = makeAnimatedComponent(AccordionHeader);
@@ -28,7 +27,7 @@ export const AccordionItem = ({
     iconVisible,
     handleClick,
     clicked,
-}: AccordionItemProps) => {
+}: NAccordion.AccordionItemProps) => {
     const [open, setOpen] = useState(false);
 
     const [height, setHeight] = useState<any>(0);
@@ -94,7 +93,13 @@ export const AccordionItem = ({
     );
 };
 
-export const Accordion = ({ children, accordionList, globalHeight, iconVisible = true, style }: AccordionProps) => {
+export const Accordion = ({
+    children,
+    accordionList,
+    globalHeight,
+    iconVisible = true,
+    style,
+}: NAccordion.AccordionProps) => {
     const accordionArrayMapping = accordionList.map((listItem) => {
         return { ...listItem, clicked: listItem.clicked };
     });
