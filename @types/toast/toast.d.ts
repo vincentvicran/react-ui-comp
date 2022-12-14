@@ -1,17 +1,18 @@
 declare namespace NToast {
-    type ToastObject = { message?: string; type?: string; header?: string };
+    type ToastType = 'success' | 'error' | 'info' | 'warning';
+    type ToastArg = { message?: string; type?: ToastType; subMsg?: string };
     type ItemObject = {
         key: number;
         message: string;
-        type: string;
-        header?: string;
+        type: ToastType;
+        subMsg?: string;
     };
 
-    interface ToastItemProps {
-        child: (arg: (toastObj: ToastObject) => void) => void;
+    interface ToastProps {
+        child: (arg: (toastObj: ToastArg) => void) => void;
         dark?: boolean;
         message?: string;
-        type?: string;
+        type?: ToastType;
         timeout?: number;
         style?: React.CSSProperties;
         closeIcon?: boolean;
@@ -19,18 +20,16 @@ declare namespace NToast {
         noHeader?: boolean;
     }
 
-    type ToastItem = {
+    type ToastItemProps = {
         message?: string;
         dark?: boolean;
-        type?: string;
+        type?: ToastType;
         style?: React.CSSProperties;
         keyValue?: number;
         timeout?: number;
-        // closeToast?: false | ((keyValue: any) => void);
         closeIcon?: boolean;
         closeToast?: boolean;
-        onRest?: false | (() => void);
-        header?: string;
+        subMsg?: string;
         noHeader?: boolean;
     };
 

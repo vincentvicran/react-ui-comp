@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { fonts } from '../../constants';
+import Theme from '../../theme';
 
 const ToastContainer = styled.div`
     position: fixed;
@@ -24,10 +24,9 @@ const MessageContainer = styled.div`
     background: white;
     padding: 9px;
     border: 1px solid #e1e1e1;
-    border-radius: 6px;
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: ${Theme.shadows.$z4};
     color: #ffffff;
-    font-family: ${fonts.family.arial};
     cursor: pointer;
     width: 100%;
     display: flex;
@@ -45,22 +44,22 @@ const ToastIndicator = styled.div`
 `;
 
 const Message = styled.div`
-    font-size: 14px;
+    font-size: ${Theme.fontSizes.$3};
     color: black;
     display: flex;
     justify-content: center;
     align-items: start;
-    gap: 4px;
+    gap: 3px;
     flex-direction: column;
 `;
 
 const MessageHeader = styled.div`
-    font-size: 12px;
+    font-size: ${Theme.fontSizes.$3};
+    font-weight: ${Theme.fontWeights.$medium};
 `;
 
 const MessageContent = styled.div`
-    font-size: 10px;
-    font-weight: 300;
+    font-size: ${Theme.fontSizes.$2};
     color: #919191;
 `;
 
@@ -79,10 +78,10 @@ const CloseIconContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 4px;
-    font-size: 12px;
+    font-size: ${Theme.fontSizes.$3};
     margin-left: auto;
     border-radius: 50%;
-    color: #a1a1a1;
+    color: ${Theme.colors.$gray600};
     transition: all 0.3s ease-in-out;
     &:hover {
         color: #717171;

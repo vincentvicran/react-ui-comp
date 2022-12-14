@@ -5,8 +5,11 @@ import {
     AnimationConfigUtils,
     useMeasure,
     useAnimatedValue,
+    interpolate,
 } from 'react-ui-animate';
-import './toast.css';
+import { MdClose, MdInfo } from 'react-icons/md';
+import { RiCheckboxCircleFill, RiErrorWarningFill } from 'react-icons/ri';
+
 import {
     MasterContainer,
     MessageContainer,
@@ -15,139 +18,34 @@ import {
     ToastIconContainer,
     ToastIndicator,
     MessageHeader,
+    ToastContainer,
     MessageContent,
 } from './toast.styled';
-import { MdClose, MdInfo } from 'react-icons/md';
-import { RiCheckboxCircleFill, RiErrorWarningFill } from 'react-icons/ri';
 
-export { ToastContainer } from './toast.styled';
+const toastData = {
+    success: { title: 'Success!', color: '#5cb85c' },
+    error: { title: "Something's wrong!", color: '#ff2400' },
+    info: { title: 'Did you know?', color: '#008ecc' },
+    warning: { title: 'Watch Out!', color: '#ffa500' },
+};
 
 const MasterContainerAnimated = makeAnimatedComponent(MasterContainer);
 const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);
 
-export const Box = ({
-    message,
-    type,
-    style,
-    timeout,
-    closeToast,
-    closeIcon = true,
-    dark,
-    header,
-    noHeader,
-}: NToast.ToastItem) => {
-    const [open, setOpen] = useState(true);
+export const useToast = () => {
+    const toastRef = useRef<((v: NToast.ToastArg) => void) | null>(null);
 
-    const [height, setHeight] = useState<any>(0);
-    const heightAnimation = useAnimatedValue(open ? height : 0);
-
-    const bind = useMeasure(({ height }: any) => {
-        height <= 50 ? setHeight(90) : setHeight(height + 50);
-    });
-
-    const [messageHeader, setMessageHeader] = useState('');
-
-    const mv = useMountedValue(open, {
-        from: 0,
-        enter: 1,
-        exit: 0,
-        config: {
-            ...AnimationConfigUtils.POWER2,
+    return {
+        handler: {
+            child: (fn: (toastObj: NToast.ToastArg) => void) => (toastRef.current = fn),
         },
-    });
-
-    const [toastProperties, setToastProperties] = useState({
-        iconColor: '#5cb85c',
-    });
-
-    useEffect(() => {
-        switch (type) {
-            case 'success':
-                setMessageHeader('Success!');
-                setToastProperties({
-                    iconColor: '#5cb85c',
-                });
-                break;
-            case 'error':
-                setMessageHeader(`Something's wrong!`);
-                setToastProperties({
-                    iconColor: '#ff2400',
-                });
-                break;
-            case 'info':
-                setMessageHeader('Did you know?');
-                setToastProperties({
-                    iconColor: '#008ecc',
-                });
-                break;
-            case 'warning':
-                setMessageHeader('Watch Out!');
-                setToastProperties({
-                    iconColor: '#ffa500',
-                });
-                break;
-            default:
-                setMessageHeader('Toast!');
-                setToastProperties({
-                    iconColor: '#5cb85c',
-                });
-        }
-
-        setTimeout(() => {
-            setOpen(false);
-        }, timeout);
-    }, [setOpen, type, timeout]);
-
-    return (
-        <div>
-            {mv(
-                (a, m) =>
-                    m && (
-                        <MasterContainerAnimated
-                            style={{
-                                height: heightAnimation.value,
-                                opacity: a.value,
-                            }}
-                        >
-                            <MessageContainerAnimated
-                                style={{
-                                    ...style,
-                                    height: height - 20,
-                                    border: dark ? `none` : ``,
-                                    backgroundColor: dark ? `black` : `white`,
-                                }}
-                                onClick={() => closeToast && setOpen(false)}
-                            >
-                                <ToastIndicator style={{ background: toastProperties.iconColor }} />
-                                <ToastIconContainer>
-                                    {type === 'success' && (
-                                        <RiCheckboxCircleFill size={20} style={{ color: toastProperties.iconColor }} />
-                                    )}
-                                    {type === 'error' && (
-                                        <RiErrorWarningFill size={20} style={{ color: toastProperties.iconColor }} />
-                                    )}
-                                    {type === 'warning' && (
-                                        <RiErrorWarningFill size={20} style={{ color: toastProperties.iconColor }} />
-                                    )}
-                                    {type === 'info' && (
-                                        <MdInfo size={20} style={{ color: toastProperties.iconColor }} />
-                                    )}
-                                </ToastIconContainer>
-                                <Message {...bind()} style={{ color: dark ? `white` : `black`, width: 180 }}>
-                                    {!noHeader && <MessageHeader>{header ? header : messageHeader}</MessageHeader>}
-                                    {message && <MessageContent>{message}</MessageContent>}
-                                </Message>
-                                {closeIcon && (
-                                    <CloseIconContainer>
-                                        <MdClose />
-                                    </CloseIconContainer>
-                                )}
-                            </MessageContainerAnimated>
-                        </MasterContainerAnimated>
-                    )
-            )}
-        </div>
-    );
+        toast: {
+            success: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'success', subMsg }),
+            error: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'error', subMsg }),
+            warning: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'warning', subMsg }),
+            info: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'info', subMsg }),
+        },
+    };
 };
 
 export const Toast = ({
@@ -158,62 +56,121 @@ export const Toast = ({
     closeIcon,
     dismissOnClick = true,
     noHeader,
-}: NToast.ToastItemProps) => {
+}: NToast.ToastProps) => {
     const toastId = useRef(0);
     const [items, setItems] = useState<Array<NToast.ItemObject>>([]);
 
-    const onRest = (keyValue: number) => {
-        setItems((prev) => prev.filter((each) => each.key !== keyValue));
-    };
-
     useEffect(() => {
-        child((toastObj: NToast.ToastObject) => {
+        child((toastObj: NToast.ToastArg) => {
             setItems((prev: any) => [
                 ...prev,
                 {
                     key: toastId.current++,
                     message: toastObj.message,
                     type: toastObj.type,
-                    header: toastObj.header,
+                    subMsg: toastObj.subMsg,
                 },
             ]);
         });
     }, [child]);
 
     return (
-        <div>
+        <ToastContainer>
             {items.map((item, i) => (
-                <Box
+                <ToastItem
                     key={i}
                     keyValue={item.key}
                     message={item.message}
                     type={item.type}
                     timeout={timeout}
-                    onRest={() => onRest(item.key)}
                     closeIcon={closeIcon}
                     closeToast={dismissOnClick}
                     style={style}
                     dark={dark}
-                    header={item.header}
+                    subMsg={item.subMsg}
                     noHeader={noHeader}
                 />
             ))}
-        </div>
+        </ToastContainer>
     );
 };
 
-export const useToast = () => {
-    let someFn: any;
+// MARK: - ToastItem
+const ToastItem = ({
+    message,
+    type = 'success',
+    style,
+    timeout,
+    closeToast,
+    closeIcon = true,
+    dark,
+    subMsg,
+    noHeader,
+}: NToast.ToastItemProps) => {
+    const [open, setOpen] = useState(true);
+    const [height, setHeight] = useState<number>(0);
+    const heightAnimation = useAnimatedValue(open ? height : 0);
 
-    return {
-        handler: {
-            child: (fn: (toastObj: NToast.ToastObject) => void) => (someFn = fn),
+    const bind = useMeasure(({ height }) => {
+        height <= 50 ? setHeight(90) : setHeight(Number(height) + 50);
+    });
+
+    const mv = useMountedValue(open, {
+        from: 0,
+        enter: 1,
+        exit: 2,
+        config: {
+            ...AnimationConfigUtils.POWER4,
         },
-        toast: {
-            success: (message?: string, header?: string) => someFn({ message, type: 'success', header }),
-            error: (message?: string, header?: string) => someFn({ message, type: 'error', header }),
-            warning: (message?: string, header?: string) => someFn({ message, type: 'warning', header }),
-            info: (message?: string, header?: string) => someFn({ message, type: 'info', header }),
-        },
-    };
+    });
+
+    useEffect(() => {
+        const t = setTimeout(() => {
+            setOpen(false);
+        }, timeout);
+
+        return () => clearTimeout(t);
+    }, [setOpen, timeout]);
+
+    const { color } = toastData[type];
+
+    return mv(
+        (animation, mounted) =>
+            mounted && (
+                <MasterContainerAnimated
+                    style={{
+                        height: heightAnimation.value,
+                        opacity: interpolate(animation.value, [0, 1, 2], [0, 1, 0]),
+                        scale: interpolate(animation.value, [0, 1, 2], [1, 1, 0.95]),
+                    }}
+                >
+                    <MessageContainerAnimated
+                        style={{
+                            ...style,
+                            height: height - 20,
+                            border: dark ? `none` : ``,
+                            backgroundColor: dark ? `black` : `white`,
+                        }}
+                        onClick={() => closeToast && setOpen(false)}
+                    >
+                        <ToastIndicator style={{ background: color }} />
+                        <ToastIconContainer>
+                            {type === 'success' && <RiCheckboxCircleFill size={20} style={{ color }} />}
+                            {type === 'error' && <RiErrorWarningFill size={20} style={{ color }} />}
+                            {type === 'warning' && <RiErrorWarningFill size={20} style={{ color }} />}
+                            {type === 'info' && <MdInfo size={20} style={{ color }} />}
+                        </ToastIconContainer>
+                        <Message {...bind()} style={{ color: dark ? `white` : `black`, width: 180 }}>
+                            {message && <MessageHeader>{message}</MessageHeader>}
+                            {subMsg && <MessageContent>{subMsg}</MessageContent>}
+                        </Message>
+                        {closeIcon && (
+                            <CloseIconContainer>
+                                <MdClose />
+                            </CloseIconContainer>
+                        )}
+                    </MessageContainerAnimated>
+                </MasterContainerAnimated>
+            )
+    );
 };

@@ -1,35 +1,51 @@
-import { Tabs, useTab } from './components';
+import React from 'react';
+//need to import Toast component along with useToast hook and ToastContainer as wrapper
+import { Toast, useToast } from './components/toast';
 
-const App = () => {
-    const { handler, activateTab } = useTab();
+export default function App() {
+    //destructuring useToast hook
+    const { handler, toast } = useToast();
+
     return (
-        <>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10% 0' }}>
-                <Tabs {...handler} onTabChange={({ activeTabId }) => console.log('activeTabId: ', activeTabId)}>
-                    <Tabs.Pane title="Tab 1" id="id1">
-                        Pane 1
-                    </Tabs.Pane>
-                    <Tabs.Pane title={<button>Tab 2</button>} id="id2">
-                        Pane 2
-                    </Tabs.Pane>
-                    <Tabs.Pane title="Tab 3" id="id3">
-                        Pane 3
-                    </Tabs.Pane>
-                    <Tabs.Pane title="Tab 4" id="id4">
-                        Pane 4
-                    </Tabs.Pane>
-                    <Tabs.Pane title="Tab 5" id="id5">
-                        Pane 5
-                    </Tabs.Pane>
-                </Tabs>
+        <div>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                {/* invoking the required type of toast function*/}
+                <button style={{ padding: '5px', margin: '5px' }} onClick={() => toast.success('hello', 'hello')}>
+                    Success
+                </button>
+                <button style={{ padding: '5px', margin: '5px' }} onClick={() => toast.error('oops')}>
+                    Error
+                </button>
+                <button
+                    style={{ padding: '5px', margin: '5px' }}
+                    onClick={() =>
+                        toast.warning(
+                            `watchout serious warning very long message here... watchout serious warning very long message here... watchout serious warning very long message here... watchout serious warning very long message here... watchout serious warning very long message here...`
+                        )
+                    }
+                >
+                    Warning
+                </button>
+                <button
+                    style={{ padding: '5px', margin: '5px' }}
+                    onClick={() =>
+                        toast.info(
+                            'good toast this is some good toast hope this will change according to the height of the message on this container this is a bit congested'
+                        )
+                    }
+                >
+                    Info
+                </button>
             </div>
-            <br />
-            <br />
-            <div>
-                <button onClick={() => activateTab('id4')}>Activate Tab 4</button>
-            </div>
-        </>
-    );
-};
 
-export default App;
+            {/* passing props accordingly*/}
+            <Toast {...handler} />
+        </div>
+    );
+}
