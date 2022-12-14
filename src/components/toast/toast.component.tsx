@@ -112,7 +112,7 @@ const ToastItem = ({
     const heightAnimation = useAnimatedValue(open ? height : 0);
 
     const bind = useMeasure(({ height }) => {
-        height <= 50 ? setHeight(90) : setHeight(Number(height) + 50);
+        height <= 50 ? setHeight(95) : setHeight(Number(height) + 50);
     });
 
     const mv = useMountedValue(open, {
@@ -142,6 +142,7 @@ const ToastItem = ({
                         height: heightAnimation.value,
                         opacity: interpolate(animation.value, [0, 1, 2], [0, 1, 0]),
                         scale: interpolate(animation.value, [0, 1, 2], [1, 1, 0.95]),
+                        marginBottom: interpolate(animation.value, [0, 1, 2], [0, 10, 0]),
                     }}
                 >
                     <MessageContainerAnimated
