@@ -6,7 +6,7 @@ const ToastContainer = styled.div`
     display: flex;
     flex-direction: column;
     z-index: 100;
-    right: 10px;
+    right: 20px;
     bottom: 10px;
     width: 275px;
 `;
@@ -24,7 +24,7 @@ const MessageContainer = styled.div`
     background: white;
     padding: 9px;
     border: 1px solid #e1e1e1;
-    border-radius: 8px;
+    border-radius: ${Theme.radius.$default};
     box-shadow: ${Theme.shadows.$z4};
     color: #ffffff;
     cursor: pointer;

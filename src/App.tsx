@@ -4,7 +4,7 @@ import { Toast, useToast } from './components/toast';
 
 export default function App() {
     //destructuring useToast hook
-    const { handler, toast } = useToast();
+    const { handler, toast, toaster } = useToast();
 
     return (
         <div>
@@ -35,7 +35,7 @@ export default function App() {
                 <button
                     style={{ padding: '5px', margin: '5px' }}
                     onClick={() =>
-                        toast.info(
+                        toaster.info(
                             'good toast this is some good toast hope this will change according to the height of the message on this container this is a bit congested'
                         )
                     }

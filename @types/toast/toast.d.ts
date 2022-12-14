@@ -17,7 +17,6 @@ declare namespace NToast {
         style?: React.CSSProperties;
         closeIcon?: boolean;
         dismissOnClick?: boolean;
-        noHeader?: boolean;
     }
 
     type ToastItemProps = {
@@ -30,10 +29,15 @@ declare namespace NToast {
         closeIcon?: boolean;
         closeToast?: boolean;
         subMsg?: string;
-        noHeader?: boolean;
     };
 
     type DarkStyle = {
         style?: React.CSSProperties;
     };
+
+    interface IToastContext {
+        // setItems: React.Dispatch<React.SetStateAction<Array<ItemObject>>>;
+        addToast: (toastObj: ToastArg) => void;
+        items: any;
+    }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import {
     useMountedValue,
     makeAnimatedComponent,
@@ -32,66 +32,48 @@ const toastData = {
 const MasterContainerAnimated = makeAnimatedComponent(MasterContainer);
 const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);
 
-export const useToast = () => {
-    const toastRef = useRef<((v: NToast.ToastArg) => void) | null>(null);
+const ToastContext = createContext({} as NToast.IToastContext);
 
-    return {
-        handler: {
-            child: (fn: (toastObj: NToast.ToastArg) => void) => (toastRef.current = fn),
-        },
-        toast: {
-            success: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'success', subMsg }),
-            error: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'error', subMsg }),
-            warning: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'warning', subMsg }),
-            info: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'info', subMsg }),
-        },
-    };
-};
-
-export const Toast = ({
-    child,
-    timeout = 5000,
-    style,
-    dark,
-    closeIcon,
-    dismissOnClick = true,
-    noHeader,
-}: NToast.ToastProps) => {
+export const Toast = ({ child, timeout = 5000, style, dark, closeIcon, dismissOnClick = true }: NToast.ToastProps) => {
     const toastId = useRef(0);
     const [items, setItems] = useState<Array<NToast.ItemObject>>([]);
 
+    const addToast = (toastObj: NToast.ToastArg) => {
+        console.log('hello');
+        setItems((prev: any) => [
+            ...prev,
+            {
+                key: toastId.current++,
+                message: toastObj.message,
+                type: toastObj.type,
+                subMsg: toastObj.subMsg,
+            },
+        ]);
+    };
+
     useEffect(() => {
-        child((toastObj: NToast.ToastArg) => {
-            setItems((prev: any) => [
-                ...prev,
-                {
-                    key: toastId.current++,
-                    message: toastObj.message,
-                    type: toastObj.type,
-                    subMsg: toastObj.subMsg,
-                },
-            ]);
-        });
+        child(addToast);
     }, [child]);
 
     return (
-        <ToastContainer>
-            {items.map((item, i) => (
-                <ToastItem
-                    key={i}
-                    keyValue={item.key}
-                    message={item.message}
-                    type={item.type}
-                    timeout={timeout}
-                    closeIcon={closeIcon}
-                    closeToast={dismissOnClick}
-                    style={style}
-                    dark={dark}
-                    subMsg={item.subMsg}
-                    noHeader={noHeader}
-                />
-            ))}
-        </ToastContainer>
+        <ToastContext.Provider value={{ addToast, items }}>
+            <ToastContainer>
+                {items.map((item, i) => (
+                    <ToastItem
+                        key={i}
+                        keyValue={item.key}
+                        message={item.message}
+                        type={item.type}
+                        timeout={timeout}
+                        closeIcon={closeIcon}
+                        closeToast={dismissOnClick}
+                        style={style}
+                        dark={dark}
+                        subMsg={item.subMsg}
+                    />
+                ))}
+            </ToastContainer>
+        </ToastContext.Provider>
     );
 };
 
@@ -105,14 +87,13 @@ const ToastItem = ({
     closeIcon = true,
     dark,
     subMsg,
-    noHeader,
 }: NToast.ToastItemProps) => {
     const [open, setOpen] = useState(true);
     const [height, setHeight] = useState<number>(0);
     const heightAnimation = useAnimatedValue(open ? height : 0);
 
     const bind = useMeasure(({ height }) => {
-        height <= 50 ? setHeight(95) : setHeight(Number(height) + 50);
+        height <= 50 ? setHeight(80) : setHeight(Number(height) + 50);
     });
 
     const mv = useMountedValue(open, {
@@ -174,4 +155,33 @@ const ToastItem = ({
                 </MasterContainerAnimated>
             )
     );
+};
+
+export const useToast = () => {
+    const toastRef = useRef<((v: NToast.ToastArg) => void) | null>(null);
+    const { addToast, items } = useContext(ToastContext);
+
+    console.log('addToast: ', addToast);
+    console.log('items: ', items);
+
+    return {
+        handler: {
+            child: (fn: (toastObj: NToast.ToastArg) => void) => (toastRef.current = fn),
+        },
+        toast: {
+            success: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'success', subMsg }),
+            error: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'error', subMsg }),
+            warning: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'warning', subMsg }),
+            info: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'info', subMsg }),
+        },
+        toaster: {
+            success: (message?: string, subMsg?: string) => addToast?.({ message, type: 'success', subMsg }),
+            error: (message?: string, subMsg?: string) => addToast?.({ message, type: 'error', subMsg }),
+            warning: (message?: string, subMsg?: string) => addToast?.({ message, type: 'warning', subMsg }),
+            info: (message?: string, subMsg?: string) => {
+                console.log('ehhh');
+                addToast?.({ message, type: 'info', subMsg });
+            },
+        },
+    };
 };
