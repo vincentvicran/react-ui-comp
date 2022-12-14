@@ -1,10 +1,11 @@
-import { Children, Key, ReactChildren, ReactElement, ReactNode } from 'react';
+import { Children, Key, ReactElement, ReactNode } from 'react';
 
 const isObject = <T extends object>(value: unknown): value is T => typeof value === 'object' && value !== null;
 
 export const reactNodeIsOfType = <P extends object, T extends { (props: P): ReactElement | null | undefined }>(
     node: ReactNode,
     type: T
+    // @ts-ignore
 ): node is { key: Key | null; type: T; props: Parameters<T>[0] } => isObject<ReactElement>(node) && node.type === type;
 
 export const hasInnerComponent = (children: any, Component: any) => {
@@ -33,15 +34,11 @@ export const getNewChildren = (children: any, components: any[] | any) => {
     return newChildren;
 };
 
-export const getNewChild = (children: ReactChildren | ReactNode, value: string) => {
+export const getNewChild = (children: ReactNode, value: string) => {
     return Children.toArray(children).filter((child: any) => child.props.id === value);
 };
 
-export const getListOfAttribute = (
-    children: ReactChildren | ReactNode,
-    attribute: string,
-    defaultAttribute?: string
-) => {
+export const getListOfAttribute = (children: ReactNode, attribute: string, defaultAttribute?: string) => {
     let listOfAttribute: any = [],
         defaultFlag: boolean = false;
 

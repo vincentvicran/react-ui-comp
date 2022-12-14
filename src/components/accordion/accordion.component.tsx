@@ -81,8 +81,10 @@ export const AccordionItem = ({
                             }}
                         >
                             <AccordionBodyContent {...bind()}>
-                                {content}
-                                {children}
+                                <>
+                                    {content}
+                                    {children}
+                                </>
                             </AccordionBodyContent>
                         </AccordionBodyAnimated>
                     </AccordionContentAnimated>

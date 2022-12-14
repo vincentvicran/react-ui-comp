@@ -86,8 +86,10 @@ export const CollapseItem = ({
                             }}
                         >
                             <CollapseBodyContent {...bind()}>
-                                {content}
-                                {children}
+                                <>
+                                    {content}
+                                    {children}
+                                </>
                             </CollapseBodyContent>
                         </CollapseBodyAnimated>
                     </CollapseContentAnimated>

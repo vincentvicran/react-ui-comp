@@ -15,16 +15,6 @@ import styled from 'styled-components';
 // const CollapseBodyContent = styled.div``
 // const CollpaseHeader = styled.div``;
 
-export {
-    CollapseContainer,
-    CollapseContent,
-    CollapseHeader,
-    CollapseBody,
-    CollapseIcon,
-    CollapseHeaderContent,
-    CollapseBodyContent,
-};
-
 const CollapseContainer = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -74,9 +64,19 @@ const CollapseBody = styled.div`
     font-size: 14px;
     background-color: #fafafa;
     // backdrop-filter: blur(5px);
-    scroll-behaviour: smooth;
+    scroll-behavior: smooth;
 `;
 
 const CollapseBodyContent = styled.div`
     padding: 8px;
 `;
+
+export {
+    CollapseContainer,
+    CollapseContent,
+    CollapseHeader,
+    CollapseBody,
+    CollapseIcon,
+    CollapseHeaderContent,
+    CollapseBodyContent,
+};
