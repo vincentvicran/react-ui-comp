@@ -1,10 +1,9 @@
-import React from 'react';
-//need to import Toast component along with useToast hook and ToastContainer as wrapper
+//need to import Toast component along with useToast hook
 import { Toast, useToast } from './components/toast';
 
 export default function App() {
     //destructuring useToast hook
-    const { handler, toast, toaster } = useToast();
+    const { handler, toast } = useToast();
 
     return (
         <div>
@@ -35,7 +34,7 @@ export default function App() {
                 <button
                     style={{ padding: '5px', margin: '5px' }}
                     onClick={() =>
-                        toaster.info(
+                        toast.info(
                             'good toast this is some good toast hope this will change according to the height of the message on this container this is a bit congested'
                         )
                     }

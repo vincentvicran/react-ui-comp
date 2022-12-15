@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, createContext, useContext } from 'react';
+import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import {
     useMountedValue,
     makeAnimatedComponent,
@@ -22,24 +22,14 @@ import {
     MessageContent,
 } from './toast.styled';
 
-const toastData = {
-    success: { title: 'Success!', color: '#5cb85c' },
-    error: { title: "Something's wrong!", color: '#ff2400' },
-    info: { title: 'Did you know?', color: '#008ecc' },
-    warning: { title: 'Watch Out!', color: '#ffa500' },
-};
-
 const MasterContainerAnimated = makeAnimatedComponent(MasterContainer);
 const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);
-
-const ToastContext = createContext({} as NToast.IToastContext);
 
 export const Toast = ({ child, timeout = 5000, style, dark, closeIcon, dismissOnClick = true }: NToast.ToastProps) => {
     const toastId = useRef(0);
     const [items, setItems] = useState<Array<NToast.ItemObject>>([]);
 
     const addToast = (toastObj: NToast.ToastArg) => {
-        console.log('hello');
         setItems((prev: any) => [
             ...prev,
             {
@@ -56,25 +46,46 @@ export const Toast = ({ child, timeout = 5000, style, dark, closeIcon, dismissOn
     }, [child]);
 
     return (
-        <ToastContext.Provider value={{ addToast, items }}>
-            <ToastContainer>
-                {items.map((item, i) => (
-                    <ToastItem
-                        key={i}
-                        keyValue={item.key}
-                        message={item.message}
-                        type={item.type}
-                        timeout={timeout}
-                        closeIcon={closeIcon}
-                        closeToast={dismissOnClick}
-                        style={style}
-                        dark={dark}
-                        subMsg={item.subMsg}
-                    />
-                ))}
-            </ToastContainer>
-        </ToastContext.Provider>
+        <ToastContainer>
+            {items.map((item, i) => (
+                <ToastItem
+                    key={i}
+                    keyValue={item.key}
+                    message={item.message}
+                    type={item.type}
+                    timeout={timeout}
+                    closeIcon={closeIcon}
+                    closeToast={dismissOnClick}
+                    style={style}
+                    dark={dark}
+                    subMsg={item.subMsg}
+                />
+            ))}
+        </ToastContainer>
     );
+};
+
+const toastData = {
+    success: {
+        title: 'Success!',
+        color: '#5cb85c',
+        icon: <RiCheckboxCircleFill size={20} style={{ color: '#5cb85c' }} />,
+    },
+    error: {
+        title: "Something's wrong!",
+        color: '#ff2400',
+        icon: <RiErrorWarningFill size={20} style={{ color: '#ff2400' }} />,
+    },
+    info: {
+        title: 'Did you know?',
+        color: '#008ecc',
+        icon: <RiErrorWarningFill size={20} style={{ color: '#008ecc' }} />,
+    },
+    warning: {
+        title: 'Watch Out!',
+        color: '#ffa500',
+        icon: <MdInfo size={20} style={{ color: '#ffa500' }} />,
+    },
 };
 
 // MARK: - ToastItem
@@ -113,7 +124,7 @@ const ToastItem = ({
         return () => clearTimeout(t);
     }, [setOpen, timeout]);
 
-    const { color } = toastData[type];
+    const { color, icon } = toastData[type];
 
     return mv(
         (animation, mounted) =>
@@ -136,12 +147,7 @@ const ToastItem = ({
                         onClick={() => closeToast && setOpen(false)}
                     >
                         <ToastIndicator style={{ background: color }} />
-                        <ToastIconContainer>
-                            {type === 'success' && <RiCheckboxCircleFill size={20} style={{ color }} />}
-                            {type === 'error' && <RiErrorWarningFill size={20} style={{ color }} />}
-                            {type === 'warning' && <RiErrorWarningFill size={20} style={{ color }} />}
-                            {type === 'info' && <MdInfo size={20} style={{ color }} />}
-                        </ToastIconContainer>
+                        <ToastIconContainer>{icon}</ToastIconContainer>
                         <Message {...bind()} style={{ color: dark ? `white` : `black`, width: 180 }}>
                             {message && <MessageHeader>{message}</MessageHeader>}
                             {subMsg && <MessageContent>{subMsg}</MessageContent>}
@@ -157,12 +163,8 @@ const ToastItem = ({
     );
 };
 
-export const useToast = () => {
+export const useToastHook = () => {
     const toastRef = useRef<((v: NToast.ToastArg) => void) | null>(null);
-    const { addToast, items } = useContext(ToastContext);
-
-    console.log('addToast: ', addToast);
-    console.log('items: ', items);
 
     return {
         handler: {
@@ -174,14 +176,26 @@ export const useToast = () => {
             warning: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'warning', subMsg }),
             info: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'info', subMsg }),
         },
-        toaster: {
-            success: (message?: string, subMsg?: string) => addToast?.({ message, type: 'success', subMsg }),
-            error: (message?: string, subMsg?: string) => addToast?.({ message, type: 'error', subMsg }),
-            warning: (message?: string, subMsg?: string) => addToast?.({ message, type: 'warning', subMsg }),
-            info: (message?: string, subMsg?: string) => {
-                console.log('ehhh');
-                addToast?.({ message, type: 'info', subMsg });
-            },
-        },
     };
+};
+
+const ToastContext = createContext({} as NToast.IToastContext);
+
+export const useToast = () => {
+    const ss = useContext(ToastContext);
+    return { ...ss };
+};
+
+export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
+    const { toast, handler } = useToastHook();
+    return (
+        <ToastContext.Provider
+            value={{
+                handler,
+                toast,
+            }}
+        >
+            {children}
+        </ToastContext.Provider>
+    );
 };

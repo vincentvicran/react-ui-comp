@@ -36,8 +36,14 @@ declare namespace NToast {
     };
 
     interface IToastContext {
-        // setItems: React.Dispatch<React.SetStateAction<Array<ItemObject>>>;
-        addToast: (toastObj: ToastArg) => void;
-        items: any;
+        handler: {
+            child: (fn: (toastObj: ToastArg) => void) => void;
+        };
+        toast: {
+            success: (message?: string, header?: string) => void;
+            error: (message?: string, header?: string) => void;
+            warning: (message?: string, header?: string) => void;
+            info: (message?: string, header?: string) => void;
+        };
     }
 }
