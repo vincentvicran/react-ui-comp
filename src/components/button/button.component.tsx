@@ -3,13 +3,12 @@ import { interpolate, makeAnimatedComponent, useMountedValue } from 'react-ui-an
 
 import { StyledButton, DisabledStyledButton, ButtonText, RippleContainer, RippleItem } from './button.styled';
 
-import { ButtonProps, RippleProps } from './button.type';
 import { ButtonLoader } from './components';
 
 const ButtonTextAnimated = makeAnimatedComponent(ButtonText);
 const RippleItemAnimated: any = makeAnimatedComponent(RippleItem);
 
-const ButtonTextContainer = (props: ButtonProps) => {
+const ButtonTextContainer = (props: NButton.ButtonProps) => {
     const { title, textStyle, leftIcon, disabled, rightIcon, loading, variant, children, color = 'default' } = props;
     return (
         <ButtonTextAnimated
@@ -37,7 +36,7 @@ const ButtonTextContainer = (props: ButtonProps) => {
     );
 };
 
-export const Button = forwardRef((props: ButtonProps, ref: any) => {
+export const Button = forwardRef((props: NButton.ButtonProps, ref: any) => {
     const {
         title,
         style,
@@ -87,7 +86,7 @@ export const Button = forwardRef((props: ButtonProps, ref: any) => {
     );
 });
 
-function Ripple({ x, y, color, variant, rippleColor }: RippleProps): any {
+function Ripple({ x, y, color, variant, rippleColor }: NButton.RippleProps): any {
     const [opened, setOpened] = useState(true);
     const openRipple = useMountedValue(opened, {
         from: 0,
@@ -123,7 +122,7 @@ function Ripple({ x, y, color, variant, rippleColor }: RippleProps): any {
     );
 }
 
-export const RippleButton = forwardRef((props: ButtonProps, ref: any) => {
+export const RippleButton = forwardRef((props: NButton.ButtonProps, ref: any) => {
     const {
         title,
         style,
@@ -162,7 +161,7 @@ export const RippleButton = forwardRef((props: ButtonProps, ref: any) => {
                 <StyledButton
                     ref={ref}
                     {...rest}
-                    onMouseDown={(e) => {
+                    onMouseDown={(e: any) => {
                         if (containerRef.current) {
                             const containerBounds = containerRef.current.getBoundingClientRect();
 

@@ -1,11 +1,9 @@
 import styled, { css } from 'styled-components';
 import { colors, fonts } from '../../constants';
 
-import { StyledButtonProps } from './button.type';
-
 const { colorOptions, variantOptions } = colors;
 
-const StyledButton = styled.button<StyledButtonProps>`
+const StyledButton = styled.button<NButton.StyledButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,7 +66,7 @@ const StyledButton = styled.button<StyledButtonProps>`
         `}
 `;
 
-const DisabledStyledButton = styled(StyledButton)<StyledButtonProps>`
+const DisabledStyledButton = styled(StyledButton)<NButton.StyledButtonProps>`
     background-color: ${variantOptions['contained'].disabledColor};
     border: 1px solid ${variantOptions['contained'].disabledColor};
 
@@ -105,7 +103,7 @@ const DisabledStyledButton = styled(StyledButton)<StyledButtonProps>`
         `}
 `;
 
-const IconStyledButton = styled.button<StyledButtonProps>`
+const IconStyledButton = styled.button<NButton.StyledButtonProps>`
     padding: 10px;
     margin: 10px;
     height: 36px;
@@ -151,7 +149,7 @@ const IconStyledButton = styled.button<StyledButtonProps>`
               `}
 `;
 
-const DisabledIconStyledButton = styled(IconStyledButton)<StyledButtonProps>`
+const DisabledIconStyledButton = styled(IconStyledButton)<NButton.StyledButtonProps>`
     padding: 0px;
     ${({ variant }) =>
         variant &&
@@ -183,12 +181,12 @@ const ButtonText = styled.div`
 
 const IconContainer = styled.div`
     position: relative;
-    zindex: 10;
+    z-index: 10;
     display: flex;
-    alignitems: center;
-    justifycontent: center;
-    fontsmooth: 10em;
-    fontsize: 25px;
+    align-items: center;
+    justify-content: center;
+    font-smooth: 10em;
+    font-size: 25px;
 `;
 
 const RippleContainer = styled.div`
@@ -197,13 +195,12 @@ const RippleContainer = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    pointerevents: none;
-    borderradius: 50%;
+    pointer-events: none;
     overflow: hidden;
     z-index: 9;
 `;
 
-const RippleItem = styled.div<StyledButtonProps>`
+const RippleItem = styled.div<NButton.StyledButtonProps>`
     ${({ color, variant }) =>
         color &&
         colorOptions[color] &&

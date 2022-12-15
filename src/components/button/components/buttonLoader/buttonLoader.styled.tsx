@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
 import { colors } from '../../../../constants';
-import { LoaderProps } from '../../button.type';
 
 const { variantOptions, colorOptions } = colors;
 
@@ -19,7 +18,7 @@ const Loader = styled.div`
     text-align: center;
 `;
 
-const BounceDiv = styled.div<LoaderProps>`
+const BounceDiv = styled.div<NButton.LoaderProps>`
     width: 6px;
     height: 6px;
     background-color: #fff;
