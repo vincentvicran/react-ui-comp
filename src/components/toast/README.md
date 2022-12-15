@@ -57,10 +57,32 @@ toast.success('hey, success!', 'Success Custom Header');
 
 ## Implementation
 
+### First, wrap the main component with the `ToastProvider` as given.
+
 ```jsx
-import React from 'react';
-//need to import Toast component along with useToast hook and ToastContainer as wrapper
-import { Toast, useToast, ToastContainer } from './components/toast';
+import { createRoot } from 'react-dom/client';
+
+import './assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf';
+import './index.css';
+
+import App from './App';
+import { ToastProvider } from './components';
+
+const root = createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
+    <ToastProvider>
+        <App />
+    </ToastProvider>
+);
+
+```
+
+### And, implement `Toast` component with `handler` function from `useToast` hook spread over it as given.
+
+```tsx
+//need to import Toast component along with useToast hook
+import { Toast, useToast } from './components/toast';
 
 export default function App() {
     //destructuring useToast hook
@@ -76,7 +98,7 @@ export default function App() {
                 }}
             >
                 {/* invoking the required type of toast function*/}
-                <button style={{ padding: '5px', margin: '5px' }} onClick={() => toast.success('hello')}>
+                <button style={{ padding: '5px', margin: '5px' }} onClick={() => toast.success('hello', 'hello')}>
                     Success
                 </button>
                 <button style={{ padding: '5px', margin: '5px' }} onClick={() => toast.error('oops')}>
@@ -104,10 +126,8 @@ export default function App() {
                 </button>
             </div>
 
-            <ToastContainer>
-                {/* passing props accordingly*/}
-                <Toast {...handler} />
-            </ToastContainer>
+            {/* passing props accordingly*/}
+            <Toast {...handler} />
         </div>
     );
 }

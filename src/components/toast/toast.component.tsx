@@ -30,7 +30,6 @@ export const Toast = ({ child, timeout = 5000, style, dark, closeIcon, dismissOn
     const [items, setItems] = useState<Array<NToast.ItemObject>>([]);
 
     const addToast = (toastObj: NToast.ToastArg) => {
-        console.log('hello');
         setItems((prev: any) => [
             ...prev,
             {

@@ -1,5 +1,4 @@
-import React from 'react';
-//need to import Toast component along with useToast hook and ToastContainer as wrapper
+//need to import Toast component along with useToast hook
 import { Toast, useToast } from './components/toast';
 
 export default function App() {
