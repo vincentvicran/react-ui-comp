@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
 import { getLightDarkColor } from '../../../../utils';
-import { ThreeDotsProps } from './threeDots.type';
 // import { colors } from '../../../constants';
 
 // const { variantOptions, colorOptions } = colors;
@@ -30,7 +29,7 @@ const colorFlow = (setColor: any) => {
     `;
 };
 
-const Sprinter = styled.div<ThreeDotsProps>`
+const Sprinter = styled.div<NLoader.DotsProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +37,7 @@ const Sprinter = styled.div<ThreeDotsProps>`
     aspect-ratio: 1/0.4;
 `;
 
-const SprinterDiv = styled.div<ThreeDotsProps>`
+const SprinterDiv = styled.div<NLoader.DotsProps>`
     width: ${({ size }) => (size ? (size * 6) / 20 + 'px' : '6px')};
     aspect-ratio: 1;
     background-color: ${({ color }) => color};

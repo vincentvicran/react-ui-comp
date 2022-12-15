@@ -1,7 +1,6 @@
 import { Sprinter1, Sprinter2, Sprinter3, Sprinter } from './threeDots.styled';
-import { ThreeDotsProps } from './threeDots.type';
 
-export const ThreeDotsLoader = (props: ThreeDotsProps) => {
+export const ThreeDotsLoader = (props: NLoader.DotsProps) => {
     return (
         <Sprinter {...props}>
             <Sprinter1 {...props} />

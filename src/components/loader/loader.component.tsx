@@ -4,7 +4,6 @@ import { getLightDarkColor } from '../../utils';
 import { ThreeDotsLoader, FourDotsLoader } from './components';
 
 import { LoaderChildren, LoaderContainer, LoaderContent, LoaderDescription } from './loader.styled';
-import { LoaderContentStyle, LoaderProps } from './loader.type';
 
 export const Loader = ({
     variant = 'four',
@@ -21,7 +20,7 @@ export const Loader = ({
         opacity: 0.9,
         shade: 1,
     },
-}: LoaderProps) => {
+}: NLoader.LoaderProps) => {
     const { blur, backgroundColor, opacity, shade } = background;
 
     const [height, setHeight] = useState<any>(0);
@@ -30,7 +29,7 @@ export const Loader = ({
         setHeight(height);
     });
 
-    const loaderContentStyle: LoaderContentStyle = style;
+    const loaderContentStyle: NLoader.LoaderContentStyle = style;
 
     return children ? (
         <LoaderContainer style={style}>

@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
 import { getLightDarkColor } from '../../../../utils';
-import { FourDotsProps } from './fourDots.type';
 // import { colors } from '../../../constants';
 
 // const { variantOptions, colorOptions } = colors;
@@ -45,7 +44,7 @@ const colorFlow = (setColor: string) => keyframes`
     }
 `;
 
-const Rotater = styled.div<FourDotsProps>`
+const Rotater = styled.div<NLoader.DotsProps>`
     width: ${({ size }) => (size ? size + 'px' : '15px')};
     aspect-ratio: 1;
     position: relative;
@@ -60,7 +59,7 @@ const Rotater = styled.div<FourDotsProps>`
               `};
 `;
 
-const RotateDiv = styled.div<FourDotsProps>`
+const RotateDiv = styled.div<NLoader.DotsProps>`
     position: absolute;
     width: ${({ size }) => (size ? size / 3 + 'px' : '15px')};
     aspect-ratio: 1;
