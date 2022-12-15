@@ -10,14 +10,12 @@ The available `props`, you can work with:
 
 | Props                     | Type    | Description                                              | Default |
 | ------------------------- | ------- | -------------------------------------------------------- | ------- |
-| message _optional_        | string  | message you want to toast.                               | -       |
 | type _optional_           | string  | type of toast `['success', 'info', 'warning', 'error']`. | -       |
 | timeout _optional_        | number  | number of milliseconds for a notification to dismiss.    | 5000    |
 | style _optional_          | style   | style object for styling notification card.              | -       |
 | closeIcon _optional_      | boolean | dictates the visibility of close icon                    | true    |
 | dismissOnClick _optional_ | boolean | closes the toast on mouse click                          | true    |
 | dark _optional_           | boolean | enables dark mode                                        | false   |
-| noHeader _optional_       | boolean | disables the header component visibility                 | false   |
 
 ---
 
@@ -31,7 +29,7 @@ const { handler, toast } = useToast();
 
 | Props   | Type   | Description                                                                           |
 | ------- | ------ | ------------------------------------------------------------------------------------- |
-| handler | object | should be spread on the Toast Component, which handles all the children toasts        |
+| handler | object | should be spread on the `Toast` Component, which handles all the children toasts      |
 | toast   | object | invokes functions as `toast.success(), toast.info(), toast.warning(), toast.error()`. |
 
 ### toast
@@ -40,7 +38,7 @@ This object takes any specific funtion of the toast type suggested above, which 
 An object that invokes functions of respective type as:
 
 ```jsx
-toast.success(message?: string, header?: string);
+toast.success(message?: string, subMsg?: string);
 
 //can be invoked like this
 toast.success();
@@ -49,8 +47,8 @@ toast.success();
 //also takes message of type string
 toast.success('hey, success!');
 
-//and additionally takes header of type string
-toast.success('hey, success!', 'Success Custom Header');
+//and additionally takes sub-message of type string
+toast.success('hey, success!', 'Success Custom Sub Message');
 ```
 
 ---

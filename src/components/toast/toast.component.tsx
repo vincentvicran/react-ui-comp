@@ -124,7 +124,7 @@ const ToastItem = ({
         return () => clearTimeout(t);
     }, [setOpen, timeout]);
 
-    const { color, icon } = toastData[type];
+    const { color, icon, title } = toastData[type];
 
     return mv(
         (animation, mounted) =>
@@ -149,7 +149,7 @@ const ToastItem = ({
                         <ToastIndicator style={{ background: color }} />
                         <ToastIconContainer>{icon}</ToastIconContainer>
                         <Message {...bind()} style={{ color: dark ? `white` : `black`, width: 180 }}>
-                            {message && <MessageHeader>{message}</MessageHeader>}
+                            <MessageHeader>{message ?? title}</MessageHeader>
                             {subMsg && <MessageContent>{subMsg}</MessageContent>}
                         </Message>
                         {closeIcon && (
