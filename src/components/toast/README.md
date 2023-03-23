@@ -46,7 +46,7 @@ toast.success('hey, success!', 'Success Custom Sub Message');
 
 ```tsx
 //need to import Toast component
-import { Toast } from './components/toast';
+import { Toast, toast } from './components/toast';
 
 export default function App() {
     return (
