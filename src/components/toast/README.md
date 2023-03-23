@@ -19,19 +19,6 @@ The available `props`, you can work with:
 
 ---
 
-## useToast()
-
-React UI Toast Component provides `useToast()` hook to handle toast notification. `useToast()` hook returns object with following keys:
-
-```typescript
-const { handler, toast } = useToast();
-```
-
-| Props   | Type   | Description                                                                           |
-| ------- | ------ | ------------------------------------------------------------------------------------- |
-| handler | object | should be spread on the `Toast` Component, which handles all the children toasts      |
-| toast   | object | invokes functions as `toast.success(), toast.info(), toast.warning(), toast.error()`. |
-
 ### toast
 
 This object takes any specific funtion of the toast type suggested above, which accepts two arguments: `message` and `header`.
@@ -55,37 +42,13 @@ toast.success('hey, success!', 'Success Custom Sub Message');
 
 ## Implementation
 
-### First, wrap the main component with the `ToastProvider` as given.
-
-```jsx
-import { createRoot } from 'react-dom/client';
-
-import './assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf';
-import './index.css';
-
-import App from './App';
-import { ToastProvider } from './components';
-
-const root = createRoot(document.getElementById('root') as HTMLElement);
-
-root.render(
-    <ToastProvider>
-        <App />
-    </ToastProvider>
-);
-
-```
-
-### And, implement `Toast` component with `handler` function from `useToast` hook spread over it as given.
+### Implement `Toast` component.
 
 ```tsx
-//need to import Toast component along with useToast hook
-import { Toast, useToast } from './components/toast';
+//need to import Toast component
+import { Toast } from './components/toast';
 
 export default function App() {
-    //destructuring useToast hook
-    const { handler, toast } = useToast();
-
     return (
         <div>
             <div
@@ -124,8 +87,8 @@ export default function App() {
                 </button>
             </div>
 
-            {/* passing props accordingly*/}
-            <Toast {...handler} />
+            {/* you can pass props accordingly*/}
+            <Toast />
         </div>
     );
 }
