@@ -12,6 +12,7 @@ declare namespace NToast {
     interface ToastStoreTypes {
         items: Array<ItemObject>;
         addItems: (item: ItemObject) => void;
+        removeItem: (itemId: number) => void;
     }
 
     interface ToastProps {
@@ -26,6 +27,7 @@ declare namespace NToast {
     }
 
     type ToastItemProps = {
+        id: number;
         message?: string;
         dark?: boolean;
         type?: ToastType;

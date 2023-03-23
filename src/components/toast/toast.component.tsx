@@ -38,6 +38,7 @@ export const Toast = ({ timeout = 5000, style, dark, closeIcon, dismissOnClick =
                 items?.map((item) => (
                     <ToastItem
                         key={item.key}
+                        id={item.key}
                         keyValue={item.key}
                         message={item.message}
                         type={item.type}
@@ -83,6 +84,11 @@ export const useToastStore = create<NToast.ToastStoreTypes>((set, get) => ({
 
         set({ items });
     },
+    removeItem: (itemId) => {
+        let items = get().items.filter((item) => itemId !== item.key);
+
+        set({ items });
+    },
 }));
 
 const setItems = (toastArg: NToast.ToastArg) => {
@@ -108,6 +114,7 @@ export const toast = {
 
 // MARK: - ToastItem
 const ToastItem = ({
+    id,
     message,
     type = 'success',
     style,
@@ -120,6 +127,8 @@ const ToastItem = ({
     const [open, setOpen] = useState(true);
     const [height, setHeight] = useState<number>(0);
     const heightAnimation = useAnimatedValue(open ? height : 0);
+
+    const removeItem = useToastStore(({ removeItem }) => removeItem);
 
     const bind = useMeasure(({ height }) => {
         height <= 50 ? setHeight(80) : setHeight(Number(height) + 50);
@@ -139,8 +148,15 @@ const ToastItem = ({
             setOpen(false);
         }, timeout);
 
-        return () => clearTimeout(t);
-    }, [setOpen, timeout]);
+        const r = setTimeout(() => {
+            removeItem(id);
+        }, (timeout ?? 1000) + 1000);
+
+        return () => {
+            clearTimeout(t);
+            clearTimeout(r);
+        };
+    }, [id, removeItem, setOpen, timeout]);
 
     const { color, icon, title } = toastData[type];
 
