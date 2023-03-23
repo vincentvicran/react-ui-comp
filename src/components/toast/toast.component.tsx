@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useContext, createContext } from 'react';
+import { useState, useEffect } from 'react';
+import { create } from 'zustand';
 import {
     useMountedValue,
     makeAnimatedComponent,
@@ -25,42 +26,29 @@ import {
 const MasterContainerAnimated = makeAnimatedComponent(MasterContainer);
 const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);
 
-export const Toast = ({ child, timeout = 5000, style, dark, closeIcon, dismissOnClick = true }: NToast.ToastProps) => {
-    const toastId = useRef(0);
-    const [items, setItems] = useState<Array<NToast.ItemObject>>([]);
+export const Toast = ({ timeout = 5000, style, dark, closeIcon, dismissOnClick = true }: NToast.ToastProps) => {
+    const items = useToastStore(({ items }) => items);
 
-    const addToast = (toastObj: NToast.ToastArg) => {
-        setItems((prev: any) => [
-            ...prev,
-            {
-                key: toastId.current++,
-                message: toastObj.message,
-                type: toastObj.type,
-                subMsg: toastObj.subMsg,
-            },
-        ]);
-    };
-
-    useEffect(() => {
-        child(addToast);
-    }, [child]);
+    console.log('items: ', items);
 
     return (
         <ToastContainer>
-            {items.map((item, i) => (
-                <ToastItem
-                    key={i}
-                    keyValue={item.key}
-                    message={item.message}
-                    type={item.type}
-                    timeout={timeout}
-                    closeIcon={closeIcon}
-                    closeToast={dismissOnClick}
-                    style={style}
-                    dark={dark}
-                    subMsg={item.subMsg}
-                />
-            ))}
+            {items &&
+                items.length > 0 &&
+                items?.map((item) => (
+                    <ToastItem
+                        key={item.key}
+                        keyValue={item.key}
+                        message={item.message}
+                        type={item.type}
+                        timeout={timeout}
+                        closeIcon={closeIcon}
+                        closeToast={dismissOnClick}
+                        style={style}
+                        dark={dark}
+                        subMsg={item.subMsg}
+                    />
+                ))}
         </ToastContainer>
     );
 };
@@ -86,6 +74,36 @@ const toastData = {
         color: '#ffa500',
         icon: <MdInfo size={20} style={{ color: '#ffa500' }} />,
     },
+};
+
+export const useToastStore = create<NToast.ToastStoreTypes>((set, get) => ({
+    items: [],
+    addItems: (item) => {
+        let items = [...get().items, item];
+
+        set({ items });
+    },
+}));
+
+const setItems = (toastArg: NToast.ToastArg) => {
+    const item = [
+        {
+            key: Math.floor(Math.random() * 10000),
+            message: toastArg.message,
+            type: toastArg.type,
+            subMsg: toastArg.subMsg,
+        },
+    ];
+    return useToastStore.setState({
+        items: [...useToastStore.getState().items, ...item],
+    });
+};
+
+export const toast = {
+    success: (message?: string, subMsg?: string) => setItems({ message, type: 'success', subMsg }),
+    error: (message?: string, subMsg?: string) => setItems({ message, type: 'error', subMsg }),
+    warning: (message?: string, subMsg?: string) => setItems({ message, type: 'warning', subMsg }),
+    info: (message?: string, subMsg?: string) => setItems({ message, type: 'info', subMsg }),
 };
 
 // MARK: - ToastItem
@@ -160,42 +178,5 @@ const ToastItem = ({
                     </MessageContainerAnimated>
                 </MasterContainerAnimated>
             )
-    );
-};
-
-export const useToastHook = () => {
-    const toastRef = useRef<((v: NToast.ToastArg) => void) | null>(null);
-
-    return {
-        handler: {
-            child: (fn: (toastObj: NToast.ToastArg) => void) => (toastRef.current = fn),
-        },
-        toast: {
-            success: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'success', subMsg }),
-            error: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'error', subMsg }),
-            warning: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'warning', subMsg }),
-            info: (message?: string, subMsg?: string) => toastRef.current?.({ message, type: 'info', subMsg }),
-        },
-    };
-};
-
-const ToastContext = createContext({} as NToast.IToastContext);
-
-export const useToast = () => {
-    const ss = useContext(ToastContext);
-    return { ...ss };
-};
-
-export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-    const { toast, handler } = useToastHook();
-    return (
-        <ToastContext.Provider
-            value={{
-                handler,
-                toast,
-            }}
-        >
-            {children}
-        </ToastContext.Provider>
     );
 };
