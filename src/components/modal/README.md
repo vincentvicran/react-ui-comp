@@ -113,7 +113,6 @@ The wrapper component for whole modal that is specifically of confirmation type.
 -   `withPortal` props by default set to **true**, hence the Modal are rendered on `react-portal-wrapper` element, outside `root` element.
 
 ```jsx
-import { FaCheck } from 'react-icons/fa';
 import { Modal, ConfirmationModal, ModalHeader, ModalBody, ModalFooter, Button } from './components';
 
 const App = () => {
