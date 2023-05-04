@@ -29,8 +29,6 @@ const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);
 export const Toast = ({ timeout = 5000, style, dark, closeIcon, dismissOnClick = true }: NToast.ToastProps) => {
     const items = useToastStore(({ items }) => items);
 
-    console.log('items: ', items);
-
     return (
         <ToastContainer>
             {items &&
@@ -131,7 +129,7 @@ const ToastItem = ({
     const removeItem = useToastStore(({ removeItem }) => removeItem);
 
     const bind = useMeasure(({ height }) => {
-        height <= 50 ? setHeight(80) : setHeight(Number(height) + 50);
+        Number(height) <= 50 ? setHeight(80) : setHeight(Number(height) + 50);
     });
 
     const mv = useMountedValue(open, {
