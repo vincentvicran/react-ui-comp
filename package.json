@@ -1,7 +1,7 @@
 {
     "name": "reusable-components-with-react-ui-animate",
-    "version": "1.0.0",
-    "private": true,
+    "version": "0.7.0",
+    "private": false,
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.5",
         "@types/chroma-js": "^2.1.4",

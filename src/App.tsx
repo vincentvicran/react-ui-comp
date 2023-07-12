@@ -14,6 +14,7 @@ const App = () => {
                 overlay={false}
                 overlayBlur={3}
                 overlayDark={false}
+                closeOnOutsideClick
                 // width={1000}
                 // height={500}
             >

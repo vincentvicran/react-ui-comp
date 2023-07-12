@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext, useRef, useCallback, useMemo, createContext } from 'react';
+import { useState, useContext, useRef, useCallback, useMemo, createContext, useLayoutEffect } from 'react';
 import {
-    useOutsideClick,
+    // useOutsideClick,
     makeAnimatedComponent,
-    useMountedValue,
     interpolate,
     AnimationConfigUtils,
     UseAnimatedValueConfig,
+    TransitionBlock,
 } from 'react-ui-animate';
 import { useScrollDisable } from '../../hooks';
 
@@ -95,7 +95,8 @@ const getOverlay = (overlay: boolean, overlayBlur: number, overlayDark: boolean)
 export const ModalContainer = ({
     children,
     visible,
-    onOutsideClick = () => true,
+    onOutsideClick,
+    closeOnOutsideClick = true,
     style,
     isAnimated = true,
     animationType = 'ease',
@@ -121,52 +122,54 @@ export const ModalContainer = ({
 
     const config: UseAnimatedValueConfig = isAnimated ? animationConfig : { immediate: true };
 
-    const transitions = useMountedValue(!!visible, {
-        from: 0,
-        enter: 1,
-        exit: 0,
-        config: {
-            ...config,
-            duration: 250,
-        },
-    });
-
-    useOutsideClick(modalRef, (e) => {
-        e.stopPropagation();
-        if (onOutsideClick && visible) {
-            onOutsideClick(e);
-            closeModal();
-        }
-    });
+    // useOutsideClick(
+    //     modalRef,
+    //     (e) => {
+    //         if (!!visible) {
+    //             onOutsideClick?.(e);
+    //             console.log('onOutsideClick');
+    //             if (!!closeOnOutsideClick) {
+    //                 closeModal();
+    //             }
+    //         }
+    //     },
+    //     [onOutsideClick, visible, closeOnOutsideClick]
+    // );
 
     useScrollDisable(disableScroll && !!visible);
 
     return (
         <ModalContext.Provider value={{ closeModal, height }}>
-            {transitions(
-                (animated, mounted) =>
-                    mounted && (
-                        <Container
+            <TransitionBlock
+                state={visible}
+                config={{
+                    ...config,
+                    duration: 250,
+                }}
+            >
+                {(animated) => (
+                    <Container
+                        itemScope={visible}
+                        style={{
+                            opacity: animated.value,
+                            ...modalContainerStyle,
+                            ...modalOverlayStyle,
+                        }}
+                    >
+                        <ModalContent
+                            ref={modalRef}
                             style={{
-                                opacity: animated.value,
-                                ...modalContainerStyle,
-                                ...modalOverlayStyle,
+                                scale: interpolate(animated.value, [0, 1], [0.8, 1]),
+                                height: 'auto',
+                                ...size,
+                                ...style,
                             }}
                         >
-                            <ModalContent
-                                ref={modalRef}
-                                style={{
-                                    scale: interpolate(animated.value, [0, 1], [0.8, 1]),
-                                    height: 'auto',
-                                    ...size,
-                                    ...style,
-                                }}
-                            >
-                                {children}
-                            </ModalContent>
-                        </Container>
-                    )
-            )}
+                            {children}
+                        </ModalContent>
+                    </Container>
+                )}
+            </TransitionBlock>
         </ModalContext.Provider>
     );
 };
@@ -186,7 +189,8 @@ export const ConfirmationModalContainer = ({
     },
     children,
     visible,
-    onOutsideClick = () => true,
+    onOutsideClick = () => {},
+    closeOnOutsideClick,
     style,
     isAnimated = true,
     animationType = 'ease',
@@ -228,24 +232,20 @@ export const ConfirmationModalContainer = ({
 
     const config: UseAnimatedValueConfig = isAnimated ? animationConfig : { immediate: true };
 
-    const transitions = useMountedValue(!!visible, {
-        from: 0,
-        enter: 1,
-        exit: 0,
-        config: {
-            ...config,
-            duration: 250,
-        },
-    });
-
     // Handle outside click
-    useOutsideClick(modalRef, (e) => {
-        e.stopPropagation();
-        if (onOutsideClick && visible) {
-            onOutsideClick(e);
-            closeModal();
-        }
-    });
+    // useOutsideClick(
+    //     modalRef,
+    //     (e) => {
+    //         if (!!visible) {
+    //             onOutsideClick?.(e);
+    //             console.log('onOutsideClick');
+    //             if (!!closeOnOutsideClick) {
+    //                 closeModal();
+    //             }
+    //         }
+    //     },
+    //     [onOutsideClick, visible, closeOnOutsideClick]
+    // );
 
     const okClicked = (e: any) => {
         e.preventDefault();
@@ -265,82 +265,90 @@ export const ConfirmationModalContainer = ({
 
     return (
         <ModalContext.Provider value={{ closeModal, height }}>
-            {transitions(
-                (animated, mounted) =>
-                    mounted && (
-                        <Container
+            <TransitionBlock
+                state={visible}
+                config={{
+                    ...config,
+                    duration: 250,
+                }}
+            >
+                {(animated) => (
+                    <Container
+                        itemScope={visible}
+                        style={{
+                            opacity: animated.value,
+                            ...modalContainerStyle,
+                        }}
+                    >
+                        <ModalContent
+                            ref={modalRef}
                             style={{
-                                opacity: animated.value,
-                                ...modalContainerStyle,
+                                ...size,
+                                ...style,
+                                scale: interpolate(animated.value, [0, 1], [0.8, 1]),
                             }}
                         >
-                            <ModalContent
-                                ref={modalRef}
-                                style={{
-                                    ...size,
-                                    ...style,
-                                    scale: interpolate(animated.value, [0, 1], [0.8, 1]),
-                                }}
-                            >
-                                {header ? (
-                                    header
-                                ) : (
-                                    <ModalHeader>
-                                        {typeof icon === 'boolean'
-                                            ? icon && (
-                                                  <HeaderIconStyled>
-                                                      <MdCheckCircle />
-                                                  </HeaderIconStyled>
-                                              )
-                                            : icon}
+                            {header ? (
+                                header
+                            ) : (
+                                <ModalHeader>
+                                    {typeof icon === 'boolean'
+                                        ? icon && (
+                                              <HeaderIconStyled>
+                                                  <MdCheckCircle />
+                                              </HeaderIconStyled>
+                                          )
+                                        : icon}
 
-                                        {headerTitle ? headerTitle : `Confirmation Modal`}
-                                    </ModalHeader>
-                                )}
-                                {body ? (
-                                    body
-                                ) : (
-                                    <ModalBody>
-                                        {getNewChildren(children, [ModalHeader, ModalBody, ModalFooter])}
-                                    </ModalBody>
-                                )}
-                                {footer ? (
-                                    footer
-                                ) : (
-                                    <ModalFooterContainer>
-                                        {onCancel && (
-                                            <ButtonStyled
-                                                onClick={(e: any) => cancelClicked(e)}
-                                                color={cancelColor ? cancelColor : '#a1a1a1'}
-                                                style={cancelStyle}
-                                            >
-                                                {cancelTitle}
-                                            </ButtonStyled>
-                                        )}
-                                        {onOk && (
-                                            <ButtonStyled
-                                                onClick={(e: any) => okClicked(e)}
-                                                color={okColor ? okColor : '#008ecc'}
-                                                // color={okColor ? okColor : 'rgba(048,22,233,0.9)'}
-                                                // color="green"
-                                                style={okStyle}
-                                            >
-                                                {okTitle}
-                                            </ButtonStyled>
-                                        )}
-                                    </ModalFooterContainer>
-                                )}
-                            </ModalContent>
-                        </Container>
-                    )
-            )}
+                                    {headerTitle ? headerTitle : `Confirmation Modal`}
+                                </ModalHeader>
+                            )}
+                            {body ? (
+                                body
+                            ) : (
+                                <ModalBody>{getNewChildren(children, [ModalHeader, ModalBody, ModalFooter])}</ModalBody>
+                            )}
+                            {footer ? (
+                                footer
+                            ) : (
+                                <ModalFooterContainer>
+                                    {onCancel && (
+                                        <ButtonStyled
+                                            onClick={(e: any) => cancelClicked(e)}
+                                            color={cancelColor ? cancelColor : '#a1a1a1'}
+                                            style={cancelStyle}
+                                        >
+                                            {cancelTitle}
+                                        </ButtonStyled>
+                                    )}
+                                    {onOk && (
+                                        <ButtonStyled
+                                            onClick={(e: any) => okClicked(e)}
+                                            color={okColor ? okColor : '#008ecc'}
+                                            // color={okColor ? okColor : 'rgba(048,22,233,0.9)'}
+                                            // color="green"
+                                            style={okStyle}
+                                        >
+                                            {okTitle}
+                                        </ButtonStyled>
+                                    )}
+                                </ModalFooterContainer>
+                            )}
+                        </ModalContent>
+                    </Container>
+                )}
+            </TransitionBlock>
         </ModalContext.Provider>
     );
 };
 
 export const Modal = (props: ExtendedModalProps) => {
     const { triggerElement, active, containerStyle, triggerToggle, children, withPortal = true, size = 'lg' } = props;
-    const [isModalActive, setModalActive] = useState<boolean>(!!active);
+    const [isModalActive, setModalActive] = useState<boolean>(false);
+
+    useLayoutEffect(() => {
+        setModalActive(active ?? false);
+    }, [active]);
 
     // Open Modal method
     const openModal: () => void = useCallback(() => {

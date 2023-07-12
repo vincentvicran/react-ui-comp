@@ -1,8 +1,9 @@
 export interface ModalProps {
     id?: string;
     children?: React.ReactNode;
-    visible?: boolean;
+    visible: boolean;
     onOutsideClick?: (event: MouseEvent) => void;
+    closeOnOutsideClick?: boolean;
     style?: Omit<React.CSSProperties, 'transform'>;
     isAnimated?: boolean;
     animationType?: 'elastic' | 'ease' | 'bounce' | 'wooble';
@@ -36,6 +37,7 @@ export interface ExtendedModalProps {
     disableScroll?: boolean;
     withPortal?: boolean;
     onOutsideClick?: (event: MouseEvent) => void;
+    closeOnOutsideClick?: boolean;
     modalContainerStyle?: Omit<React.CSSProperties, 'opacity'>;
     containerStyle?: React.CSSProperties;
     size?: ModalSize;

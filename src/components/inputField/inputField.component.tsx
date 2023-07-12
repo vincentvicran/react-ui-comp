@@ -71,7 +71,11 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>((p
                 minLength: +min,
                 maxLength: +max,
             };
-        }
+        } else
+            return {
+                minLength: undefined,
+                maxLength: undefined,
+            };
     }, [min, max]);
 
     //* checks input length with respect to maxlength
@@ -359,7 +363,11 @@ export const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
                 minLength: +min,
                 maxLength: +max,
             };
-        }
+        } else
+            return {
+                minLength: undefined,
+                maxLength: undefined,
+            };
     }, [min, max]);
 
     //* checks input length with respect to maxlength

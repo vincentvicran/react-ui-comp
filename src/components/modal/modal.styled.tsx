@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import { getLightDarkColor } from '../../utils';
 
-const ContainerStyled = styled.div`
+const ContainerStyled = styled.div<{ itemScope: boolean }>`
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
     width: 100%;
-    z-index: 100;
+    z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Inter;
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
+    pointer-events: ${({ itemScope }) => (itemScope ? 'all' : 'none')};
 `;
 
 const ModalContentStyled = styled.div`
