@@ -8,7 +8,12 @@ import {
     UseAnimatedValueConfig,
     TransitionBlock,
 } from 'react-ui-animate';
-import { useScrollDisable } from '../../hooks';
+import { CgClose } from 'react-icons/cg';
+import { MdCheckCircle } from 'react-icons/md';
+
+import { ReactPortal } from 'components';
+import { getNewChildren, hasInnerComponent } from 'utils';
+import { useScrollDisable } from 'hooks';
 
 import {
     BodyPropsType,
@@ -29,10 +34,6 @@ import {
     ButtonStyled,
     HeaderIconStyled,
 } from './modal.styled';
-import { ReactPortal } from './components';
-import { CgClose } from 'react-icons/cg';
-import { MdCheckCircle } from 'react-icons/md';
-import { getNewChildren, hasInnerComponent } from '../../utils';
 
 const Container = makeAnimatedComponent(ContainerStyled);
 const ModalContent = makeAnimatedComponent(ModalContentStyled);

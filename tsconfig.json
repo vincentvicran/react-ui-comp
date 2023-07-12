@@ -24,7 +24,9 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "baseUrl": "src",
-        "noEmit": true
+        "rootDir": "src",
+        "noEmit": true,
+        "declarationMap": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist", "example", "rollup.config.js"]

@@ -8,3 +8,4 @@ export * from './select';
 export * from './toast';
 export * from './tabs';
 export * from './loader';
+export * from './reactPortal';
