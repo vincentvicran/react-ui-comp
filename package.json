@@ -1,9 +1,21 @@
 {
-    "name": "reusable-components-with-react-ui-animate",
+    "name": "react-components",
     "version": "0.7.0",
+    "description": "React library for reusable components",
     "private": false,
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "dependencies": {
-        "@reduxjs/toolkit": "^1.8.5",
+        "react-icons": "^4.3.1",
+        "react-select": "^5.3.0",
+        "react-ui-animate": "^2.0.0",
+        "styled-components": "^5.3.5",
+        "zustand": "^4.3.6"
+    },
+    "peerDependencies": {
+        "react": ">=17.0.0 || >=18.0.0"
+    },
+    "devDependencies": {
         "@types/chroma-js": "^2.1.4",
         "@types/node": "18.7.18",
         "@types/react": "18.0.20",
@@ -13,36 +25,47 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.3.1",
-        "react-redux": "^8.0.2",
         "react-scripts": "5.0.0",
         "react-select": "^5.3.0",
         "react-ui-animate": "^2.0.0",
+        "rollup": "^3.26.2",
+        "rollup-plugin-typescript2": "^0.35.0",
         "styled-components": "^5.3.5",
         "typescript": "^4.6.3",
         "zustand": "^4.3.6"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "build": "rollup -c",
+        "start": "rollup -c -w",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "version:minor": "npm version --no-git-tag-version minor",
+        "version:major": "npm version --no-git-tag-version major",
+        "version:patch": "npm version --no-git-tag-version patch"
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vincentvicran/react-ui-comp.git"
     },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+    "keywords": [
+        "react-comp",
+        "modal",
+        "dropdown",
+        "accordion",
+        "toast",
+        "loader",
+        "button",
+        "collapse",
+        "reusable",
+        "components",
+        "react-ui-comp"
+    ],
+    "author": "Vikrant Shrestha",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/vincentvicran/react-ui-comp.git/issues"
+    },
+    "homepage": "https://github.com/vincentvicran/react-ui-comp.git#readme",
+    "files": [
+        "/lib"
+    ]
 }
