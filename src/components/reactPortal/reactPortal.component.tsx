@@ -27,7 +27,6 @@ export const ReactPortal = ({ children, wrapperId = 'react-portal-wrapper' }: NP
             // delete the programatically created element
             if (systemCreated && element?.parentNode) {
                 element.remove();
-                console.log('return: ', element.parentNode?.removeChild(element));
             }
         };
     }, [wrapperId]);

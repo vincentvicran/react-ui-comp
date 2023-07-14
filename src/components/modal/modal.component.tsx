@@ -8,22 +8,11 @@ import {
     UseAnimatedValueConfig,
     TransitionBlock,
 } from 'react-ui-animate';
-import { CgClose } from 'react-icons/cg';
-import { MdCheckCircle } from 'react-icons/md';
 
 import { ReactPortal } from 'components';
 import { getNewChildren, hasInnerComponent } from 'utils';
 import { useScrollDisable } from 'hooks';
 
-import {
-    BodyPropsType,
-    ConfirmationModalPropsType,
-    ExtendedModalProps,
-    FooterPropsType,
-    HeaderPropsType,
-    ModalProps,
-    ModalSize,
-} from './modal.type';
 import {
     ContainerStyled,
     ModalHeaderStyled,
@@ -34,6 +23,7 @@ import {
     ButtonStyled,
     HeaderIconStyled,
 } from './modal.styled';
+import { CgClose, MdCheckCircle } from 'components/icons';
 
 const Container = makeAnimatedComponent(ContainerStyled);
 const ModalContent = makeAnimatedComponent(ModalContentStyled);
@@ -60,7 +50,7 @@ const getAnimationConfig = (animationType: any) => {
     }
 };
 
-const getModalSize = (modalSize?: ModalSize, width?: number) => {
+const getModalSize = (modalSize?: NModal.ModalSize, width?: number) => {
     switch (modalSize) {
         case 'full':
             return { width: width ? width : '100vw' };
@@ -110,7 +100,7 @@ export const ModalContainer = ({
     overlay = true,
     overlayBlur = 5,
     overlayDark = true,
-}: ModalProps) => {
+}: NModal.ModalProps) => {
     const modalRef = useRef<HTMLElement>(null);
 
     const modalOverlayStyle = getOverlay(overlay, overlayBlur, overlayDark);
@@ -203,7 +193,7 @@ export const ConfirmationModalContainer = ({
     width,
     height = 0,
     icon,
-}: ModalProps) => {
+}: NModal.ModalProps) => {
     const modalRef = useRef<HTMLElement>(null);
 
     const {
@@ -343,7 +333,7 @@ export const ConfirmationModalContainer = ({
     );
 };
 
-export const Modal = (props: ExtendedModalProps) => {
+export const Modal = (props: NModal.ExtendedModalProps) => {
     const { triggerElement, active, containerStyle, triggerToggle, children, withPortal = true, size = 'lg' } = props;
     const [isModalActive, setModalActive] = useState<boolean>(false);
 
@@ -392,7 +382,7 @@ export const Modal = (props: ExtendedModalProps) => {
     );
 };
 
-export const ConfirmationModal = (props: ConfirmationModalPropsType) => {
+export const ConfirmationModal = (props: NModal.ConfirmationModalPropsType) => {
     const {
         triggerElement,
         active,
@@ -461,7 +451,7 @@ export const ConfirmationModal = (props: ConfirmationModalPropsType) => {
     );
 };
 
-export const ModalHeader = ({ children, style, className, closeIcon = true }: HeaderPropsType) => {
+export const ModalHeader = ({ children, style, className, closeIcon = true }: NModal.HeaderPropsType) => {
     var { closeModal } = useContext(ModalContext);
     return (
         <ModalHeaderContainer style={style} className={className}>
@@ -475,7 +465,7 @@ export const ModalHeader = ({ children, style, className, closeIcon = true }: He
     );
 };
 
-export const ModalBody = ({ children, style, className, align = 'left' }: BodyPropsType) => {
+export const ModalBody = ({ children, style, className, align = 'left' }: NModal.BodyPropsType) => {
     var { height } = useContext(ModalContext);
 
     const alignStyle = useMemo(() => {
@@ -512,7 +502,7 @@ export const ModalBody = ({ children, style, className, align = 'left' }: BodyPr
     );
 };
 
-export const ModalFooter = ({ children, style, className, align = 'right' }: FooterPropsType) => {
+export const ModalFooter = ({ children, style, className, align = 'right' }: NModal.FooterPropsType) => {
     const alignStyle = useMemo(() => {
         switch (align) {
             case 'center':
