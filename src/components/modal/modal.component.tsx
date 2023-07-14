@@ -9,10 +9,11 @@ import {
     TransitionBlock,
 } from 'react-ui-animate';
 
-import { ReactPortal } from 'components';
 import { CgClose, MdCheckCircle } from 'components/icons';
 import { getNewChildren, hasInnerComponent } from 'utils';
 import { useScrollDisable } from 'hooks';
+
+import { ReactPortal } from '../reactPortal';
 
 import {
     ContainerStyled,

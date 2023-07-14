@@ -36,7 +36,7 @@ const ButtonTextContainer = (props: NButton.ButtonProps) => {
     );
 };
 
-export const Button = forwardRef((props: NButton.ButtonProps, ref: any) => {
+export const Button = forwardRef<HTMLButtonElement, NButton.ButtonProps>((props, ref) => {
     const {
         title,
         style,
@@ -122,7 +122,7 @@ function Ripple({ x, y, color, variant, rippleColor }: NButton.RippleProps): any
     );
 }
 
-export const RippleButton = forwardRef((props: NButton.ButtonProps, ref: any) => {
+export const RippleButton = forwardRef<HTMLButtonElement, NButton.ButtonProps>((props, ref) => {
     const {
         title,
         style,
