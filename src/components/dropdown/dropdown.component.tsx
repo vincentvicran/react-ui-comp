@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { useOutsideClick, AnimatedBlock, useMountedValue, interpolate, AnimationConfigUtils } from 'react-ui-animate';
+
 import { MenuBreakStyled, MenuIconStyled, MenuItemStyled, MenuStyled } from './dropdown.styled';
-// import { AnimationType, getAnimationConfig } from '../modules';
-
-// import { Button } from '../button'
-
-import { DropdownMenuItem, DropdownProps, placementType } from './dropdown.type';
 
 const getAnimationConfig = (animationType: any) => {
     switch (animationType) {
@@ -34,7 +30,7 @@ export const Dropdown = ({
     inDismiss = false,
     triggerToggle = false,
     containerClass,
-}: DropdownProps) => {
+}: NDropdown.DropdownProps) => {
     const containerRef: React.RefObject<HTMLDivElement> = React.useRef<HTMLDivElement>(null);
 
     const [dropdownActive, setDropdownActive] = React.useState<boolean>(active);
@@ -75,7 +71,7 @@ export const Dropdown = ({
     };
 
     // Direction of dropdown menu
-    const getDirectionStyles: (pm: placementType) => React.CSSProperties = (pm: placementType) => {
+    const getDirectionStyles: (pm: NDropdown.PlacementType) => React.CSSProperties = (pm: NDropdown.PlacementType) => {
         switch (pm) {
             case 'bottomleft':
                 return { left: 0, top: '100%' };
@@ -93,7 +89,7 @@ export const Dropdown = ({
     };
 
     // Transform origin of dropdown animation
-    const getTransformOrigin: (pm: placementType) => React.CSSProperties = (pm: placementType) => {
+    const getTransformOrigin: (pm: NDropdown.PlacementType) => React.CSSProperties = (pm: NDropdown.PlacementType) => {
         switch (pm) {
             case 'bottomleft':
                 return { transformOrigin: '0% 0%' };
@@ -201,7 +197,7 @@ export const MenuItem = ({
     hoverColor = '#f1f1f1',
     onClick,
     danger,
-}: DropdownMenuItem) => {
+}: NDropdown.DropdownMenuItem) => {
     return (
         <MenuItemStyled
             style={{
