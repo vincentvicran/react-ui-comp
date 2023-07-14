@@ -1,6 +1,6 @@
 {
     "name": "react-easy-comp",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "description": "React library for easy reusable components",
     "main": "lib/cjs/index.js",
     "module": "lib/esm/index.js",
@@ -62,5 +62,6 @@
     "homepage": "https://github.com/vincentvicran/react-ui-comp.git#readme",
     "files": [
         "/lib"
-    ]
+    ],
+    "type": "module"
 }

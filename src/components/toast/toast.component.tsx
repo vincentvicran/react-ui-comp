@@ -8,8 +8,6 @@ import {
     useAnimatedValue,
     interpolate,
 } from 'react-ui-animate';
-import { MdClose, MdInfo } from 'react-icons/md';
-import { RiCheckboxCircleFill, RiErrorWarningFill } from 'react-icons/ri';
 
 import {
     MasterContainer,
@@ -22,6 +20,7 @@ import {
     ToastContainer,
     MessageContent,
 } from './toast.styled';
+import { MdClose, MdInfo, RiCheckboxCircleFill, RiErrorWarningFill } from 'components/icons';
 
 const MasterContainerAnimated = makeAnimatedComponent(MasterContainer);
 const MessageContainerAnimated = makeAnimatedComponent(MessageContainer);

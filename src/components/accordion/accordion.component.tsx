@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TransitionBlock, interpolate, makeAnimatedComponent, useAnimatedValue, useMeasure } from 'react-ui-animate';
 
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward } from 'components/icons';
 
 import {
     AccordionContainer,
