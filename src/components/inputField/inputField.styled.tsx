@@ -1,4 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
+import { NInputField } from '@types';
+
 import { colors, variables } from '../../constants';
 
 const colorOptions = {

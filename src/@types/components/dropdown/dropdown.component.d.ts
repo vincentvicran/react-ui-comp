@@ -1,4 +1,4 @@
-declare namespace NDropdown {
+export declare namespace NDropdown {
     interface DropdownProps {
         children?: React.ReactNode;
         triggerElement?: React.ReactNode;

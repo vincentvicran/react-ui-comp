@@ -8,6 +8,7 @@ import {
     useAnimatedValue,
     interpolate,
 } from 'react-ui-animate';
+import { NToast } from '@types';
 
 import {
     MasterContainer,

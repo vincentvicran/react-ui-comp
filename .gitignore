@@ -12,6 +12,9 @@
 /build
 /lib
 /dist
+build
+lib
+dist
 
 # misc
 .DS_Store

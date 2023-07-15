@@ -29,8 +29,9 @@
         "isolatedModules": true,
 
         "baseUrl": "src",
-        "rootDir": "src"
+        "rootDir": "src",
+        "typeRoots": ["src/@types/*"]
     },
-    "include": ["src"],
+    "include": ["src", "src/@types"],
     "exclude": ["node_modules", "dist", "lib", "example", "rollup.config.mjs"]
 }

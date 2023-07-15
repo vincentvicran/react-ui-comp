@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { getLightDarkColor } from '../../utils';
+import { NLoader } from '@types';
+
+import { getLightDarkColor } from 'utils';
 
 const LoaderContainer = styled.div`
     font-family: Inter;

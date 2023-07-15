@@ -1,4 +1,5 @@
 import { Bounce1, Bounce2, Bounce3, Loader } from './buttonLoader.styled';
+import { NButton } from '@types';
 
 export const ButtonLoader = ({ variant, color, disabled }: NButton.LoaderProps) => {
     return (

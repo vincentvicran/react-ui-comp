@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NAccordion } from '@types';
 
 const AccordionContainer = styled.div`
     display: flex;

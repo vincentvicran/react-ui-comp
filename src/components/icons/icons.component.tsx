@@ -1,3 +1,5 @@
+import { NIcons } from '@types';
+
 export const withResponsiveSVG =
     (Component: React.FC<NIcons.SVGProps>) =>
     ({ size, width = '1em', height = '1em', ...rest }: NIcons.ResponsiveSVGProps): JSX.Element | null => {

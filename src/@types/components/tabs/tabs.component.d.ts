@@ -1,4 +1,4 @@
-declare namespace NTabs {
+export declare namespace NTabs {
     interface TabContextType {
         tabHeader: string;
     }

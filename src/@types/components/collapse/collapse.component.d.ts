@@ -1,4 +1,4 @@
-declare namespace NCollapse {
+export declare namespace NCollapse {
     interface CollapseProps {
         type?: 'accordion' | 'collapse' | 'details';
         children?: React.ReactNode;

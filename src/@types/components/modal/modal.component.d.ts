@@ -1,4 +1,4 @@
-declare namespace NModal {
+export declare namespace NModal {
     interface ModalProps {
         id?: string;
         children?: React.ReactNode;

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useMeasure } from 'react-ui-animate';
-import { getLightDarkColor } from '../../utils';
+import { NLoader } from '@types';
+
+import { getLightDarkColor } from 'utils';
 import { ThreeDotsLoader, FourDotsLoader } from './components';
 
 import { LoaderChildren, LoaderContainer, LoaderContent, LoaderDescription } from './loader.styled';

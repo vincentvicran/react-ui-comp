@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NDropdown } from '@types';
 
 const MenuStyled = styled.div`
     padding: 8px 0;

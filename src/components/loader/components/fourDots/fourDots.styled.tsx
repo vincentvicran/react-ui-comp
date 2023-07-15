@@ -1,8 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
-import { getLightDarkColor } from '../../../../utils';
-// import { colors } from '../../../constants';
+import { NLoader } from '@types';
 
-// const { variantOptions, colorOptions } = colors;
+import { getLightDarkColor } from '../../../../utils';
 
 const rotater = keyframes`
     0%{

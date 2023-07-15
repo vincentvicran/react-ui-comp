@@ -1,4 +1,4 @@
-declare namespace NInputField {
+export declare namespace NInputField {
     interface InputFieldProps extends React.ComponentPropsWithoutRef<'input'> {
         name: string;
         label?: string;

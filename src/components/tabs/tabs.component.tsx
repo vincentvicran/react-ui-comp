@@ -1,6 +1,7 @@
 import { ReactChild, ReactFragment, useCallback, useEffect, useState } from 'react';
+import { NTabs } from '@types';
 
-import { getListOfAttribute, getNewChild } from '../../utils';
+import { getListOfAttribute, getNewChild } from 'utils';
 
 import { TabBodyStyled, TabHeadersStyled, TabPaneStyled, TabsStyled } from './tabs.styled';
 
