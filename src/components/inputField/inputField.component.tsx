@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, forwardRef } from 'react';
 import { makeAnimatedComponent, useAnimatedValue, AnimationConfigUtils, interpolate } from 'react-ui-animate';
-import { NInputField } from '@types';
+import { NInputField } from './inputField.type';
 
 import {
     InputContainer,

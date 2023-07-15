@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import { NInputField } from '@types';
+import { NInputField } from './inputField.type';
 
 import { colors, variables } from '../../constants';
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, forwardRef } from 'react';
 import { interpolate, makeAnimatedComponent, useMountedValue } from 'react-ui-animate';
-import { NButton } from '@types';
+import { NButton } from './button.type';
 
 import { StyledButton, DisabledStyledButton, ButtonText, RippleContainer, RippleItem } from './button.styled';
 

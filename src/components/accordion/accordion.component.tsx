@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TransitionBlock, interpolate, makeAnimatedComponent, useAnimatedValue, useMeasure } from 'react-ui-animate';
-import { NAccordion } from '@types';
+import { NAccordion } from './accordion.type';
 
 import { IoIosArrowForward } from 'components/icons';
 

@@ -1,6 +1,6 @@
 {
     "name": "react-easy-comp",
-    "version": "0.8.6",
+    "version": "0.8.7",
     "description": "React library for easy reusable components",
     "main": "lib/cjs/index.js",
     "module": "lib/esm/index.js",

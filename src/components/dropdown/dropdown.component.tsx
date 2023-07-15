@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useOutsideClick, AnimatedBlock, useMountedValue, interpolate, AnimationConfigUtils } from 'react-ui-animate';
-import { NDropdown } from '@types';
+import { NDropdown } from './dropdown.type';
 
 import { MenuBreakStyled, MenuIconStyled, MenuItemStyled, MenuStyled } from './dropdown.styled';
 

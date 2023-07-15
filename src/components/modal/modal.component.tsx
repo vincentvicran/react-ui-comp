@@ -8,7 +8,7 @@ import {
     UseAnimatedValueConfig,
     TransitionBlock,
 } from 'react-ui-animate';
-import { NModal } from '@types';
+import { NModal } from './modal.type';
 
 import { CgClose, MdCheckCircle } from 'components/icons';
 import { getNewChildren, hasInnerComponent } from 'utils';

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { NButton } from '@types';
+import { NButton } from './button.type';
 
 import { colors, fonts } from '../../constants';
 

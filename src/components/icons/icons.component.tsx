@@ -1,4 +1,4 @@
-import { NIcons } from '@types';
+import { NIcons } from './icons.type';
 
 export const withResponsiveSVG =
     (Component: React.FC<NIcons.SVGProps>) =>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NLoader } from '@types';
+import { NLoader } from './loader.type';
 
 import { getLightDarkColor } from 'utils';
 

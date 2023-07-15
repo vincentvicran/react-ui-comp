@@ -1,5 +1,5 @@
 import { ReactChild, ReactFragment, useCallback, useEffect, useState } from 'react';
-import { NTabs } from '@types';
+import { NTabs } from './tabs.type';
 
 import { getListOfAttribute, getNewChild } from 'utils';
 

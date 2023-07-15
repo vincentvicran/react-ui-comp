@@ -7,7 +7,7 @@ import {
     useAnimatedValue,
     AnimatedBlock,
 } from 'react-ui-animate';
-import { NCollapse } from '@types';
+import { NCollapse } from './collapse.type';
 
 import { IoIosArrowForward } from 'components/icons';
 

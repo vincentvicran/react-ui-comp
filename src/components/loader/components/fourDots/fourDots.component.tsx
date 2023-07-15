@@ -1,5 +1,5 @@
 import { Rotater, Rotate1, Rotate2, Rotate3, Rotate4 } from './fourDots.styled';
-import { NLoader } from '@types';
+import { NLoader } from '../../loader.type';
 
 export const FourDotsLoader = (props: NLoader.DotsProps) => {
     return (
