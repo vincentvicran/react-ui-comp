@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, forwardRef } from 'react';
 import { makeAnimatedComponent, useAnimatedValue, AnimationConfigUtils, interpolate } from 'react-ui-animate';
 
 import {
@@ -18,7 +18,10 @@ const InputLengthAnimated = makeAnimatedComponent(InputLength);
 const BoxAnimated = makeAnimatedComponent(Box);
 const RequiredSignAnimated = makeAnimatedComponent(RequiredSign);
 
-export const InputField = React.forwardRef<HTMLInputElement, NInputField.InputFieldProps>((props, ref) => {
+export const InputField: React.FC<NInputField.InputFieldProps> = forwardRef<
+    HTMLInputElement,
+    NInputField.InputFieldProps
+>((props, ref) => {
     let {
         label,
         labelStyle,
@@ -187,7 +190,10 @@ export const InputField = React.forwardRef<HTMLInputElement, NInputField.InputFi
     );
 });
 
-export const TextArea = React.forwardRef<HTMLTextAreaElement, NInputField.TextAreaProps>((props, ref) => {
+export const TextArea: React.FC<NInputField.TextAreaProps> = React.forwardRef<
+    HTMLTextAreaElement,
+    NInputField.TextAreaProps
+>((props, ref) => {
     const {
         name,
         label,
@@ -315,7 +321,10 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, NInputField.TextAr
     );
 });
 
-export const SearchField = React.forwardRef<HTMLInputElement, NInputField.SearchFieldProps>((props, ref) => {
+export const SearchField: React.FC<NInputField.SearchFieldProps> = React.forwardRef<
+    HTMLInputElement,
+    NInputField.SearchFieldProps
+>((props, ref) => {
     let {
         label,
 

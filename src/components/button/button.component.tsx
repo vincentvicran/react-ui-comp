@@ -36,55 +36,57 @@ const ButtonTextContainer = (props: NButton.ButtonProps) => {
     );
 };
 
-export const Button = forwardRef<HTMLButtonElement, NButton.ButtonProps>((props, ref) => {
-    const {
-        title,
-        style,
-        className,
-        textStyle,
-        leftIcon,
-        rightIcon,
-        rippleColor,
-        onClick,
-        loading,
-        disabled,
-        variant,
-        children,
-        color = 'default',
-        ...rest
-    } = props;
-    const containerRef = useRef<HTMLDivElement>(null);
+export const Button: React.FC<NButton.ButtonProps> = forwardRef<HTMLButtonElement, NButton.ButtonProps>(
+    (props, ref) => {
+        const {
+            title,
+            style,
+            className,
+            textStyle,
+            leftIcon,
+            rightIcon,
+            rippleColor,
+            onClick,
+            loading,
+            disabled,
+            variant,
+            children,
+            color = 'default',
+            ...rest
+        } = props;
+        const containerRef = useRef<HTMLDivElement>(null);
 
-    return (
-        <div
-            ref={containerRef}
-            style={{
-                display: 'inline-block',
-            }}
-        >
-            {disabled ? (
-                <DisabledStyledButton
-                    style={{ ...style, cursor: disabled ? 'not-allowed' : 'default' }}
-                    variant={variant}
-                    color={color}
-                >
-                    <ButtonTextContainer {...props} />
-                </DisabledStyledButton>
-            ) : (
-                <StyledButton
-                    ref={ref}
-                    {...rest}
-                    onClick={onClick}
-                    {...{ style, className }}
-                    variant={variant}
-                    color={color}
-                >
-                    <ButtonTextContainer {...props} />
-                </StyledButton>
-            )}
-        </div>
-    );
-});
+        return (
+            <div
+                ref={containerRef}
+                style={{
+                    display: 'inline-block',
+                }}
+            >
+                {disabled ? (
+                    <DisabledStyledButton
+                        style={{ ...style, cursor: disabled ? 'not-allowed' : 'default' }}
+                        variant={variant}
+                        color={color}
+                    >
+                        <ButtonTextContainer {...props} />
+                    </DisabledStyledButton>
+                ) : (
+                    <StyledButton
+                        ref={ref}
+                        {...rest}
+                        onClick={onClick}
+                        {...{ style, className }}
+                        variant={variant}
+                        color={color}
+                    >
+                        <ButtonTextContainer {...props} />
+                    </StyledButton>
+                )}
+            </div>
+        );
+    }
+);
 
 function Ripple({ x, y, color, variant, rippleColor }: NButton.RippleProps): any {
     const [opened, setOpened] = useState(true);
@@ -122,78 +124,80 @@ function Ripple({ x, y, color, variant, rippleColor }: NButton.RippleProps): any
     );
 }
 
-export const RippleButton = forwardRef<HTMLButtonElement, NButton.ButtonProps>((props, ref) => {
-    const {
-        title,
-        style,
-        className,
-        textStyle,
-        leftIcon,
-        rightIcon,
-        rippleColor,
-        onClick,
-        loading,
-        disabled,
-        variant,
-        children,
-        color = 'default',
-        ...rest
-    } = props;
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [ripples, setRipples] = useState<Array<{ x: number; y: number }>>([]);
+export const RippleButton: React.FC<NButton.ButtonProps> = forwardRef<HTMLButtonElement, NButton.ButtonProps>(
+    (props, ref) => {
+        const {
+            title,
+            style,
+            className,
+            textStyle,
+            leftIcon,
+            rightIcon,
+            rippleColor,
+            onClick,
+            loading,
+            disabled,
+            variant,
+            children,
+            color = 'default',
+            ...rest
+        } = props;
+        const containerRef = useRef<HTMLDivElement>(null);
+        const [ripples, setRipples] = useState<Array<{ x: number; y: number }>>([]);
 
-    return (
-        <div
-            ref={containerRef}
-            style={{
-                display: 'inline-block',
-            }}
-        >
-            {disabled ? (
-                <DisabledStyledButton
-                    style={{ ...style, cursor: disabled ? 'not-allowed' : 'default' }}
-                    variant={variant}
-                    color={color}
-                >
-                    <ButtonTextContainer {...props} />
-                </DisabledStyledButton>
-            ) : (
-                <StyledButton
-                    ref={ref}
-                    {...rest}
-                    onMouseDown={(e: any) => {
-                        if (containerRef.current) {
-                            const containerBounds = containerRef.current.getBoundingClientRect();
+        return (
+            <div
+                ref={containerRef}
+                style={{
+                    display: 'inline-block',
+                }}
+            >
+                {disabled ? (
+                    <DisabledStyledButton
+                        style={{ ...style, cursor: disabled ? 'not-allowed' : 'default' }}
+                        variant={variant}
+                        color={color}
+                    >
+                        <ButtonTextContainer {...props} />
+                    </DisabledStyledButton>
+                ) : (
+                    <StyledButton
+                        ref={ref}
+                        {...rest}
+                        onMouseDown={(e: any) => {
+                            if (containerRef.current) {
+                                const containerBounds = containerRef.current.getBoundingClientRect();
 
-                            const x = e.clientX - containerBounds.left;
-                            const y = e.clientY - containerBounds.top;
+                                const x = e.clientX - containerBounds.left;
+                                const y = e.clientY - containerBounds.top;
 
-                            setRipples((prev) => {
-                                return [...prev, { x, y }];
-                            });
-                        }
-                    }}
-                    onClick={onClick}
-                    {...{ style, className }}
-                    variant={variant}
-                    color={color}
-                >
-                    <ButtonTextContainer {...props} />
-                    <RippleContainer>
-                        {ripples.map(({ x, y }, index) => {
-                            return (
-                                <Ripple
-                                    {...{ x, y }}
-                                    key={index}
-                                    rippleColor={rippleColor}
-                                    color={color}
-                                    variant={variant}
-                                />
-                            );
-                        })}
-                    </RippleContainer>
-                </StyledButton>
-            )}
-        </div>
-    );
-});
+                                setRipples((prev) => {
+                                    return [...prev, { x, y }];
+                                });
+                            }
+                        }}
+                        onClick={onClick}
+                        {...{ style, className }}
+                        variant={variant}
+                        color={color}
+                    >
+                        <ButtonTextContainer {...props} />
+                        <RippleContainer>
+                            {ripples.map(({ x, y }, index) => {
+                                return (
+                                    <Ripple
+                                        {...{ x, y }}
+                                        key={index}
+                                        rippleColor={rippleColor}
+                                        color={color}
+                                        variant={variant}
+                                    />
+                                );
+                            })}
+                        </RippleContainer>
+                    </StyledButton>
+                )}
+            </div>
+        );
+    }
+);
