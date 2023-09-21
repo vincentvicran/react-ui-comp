@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
-import { colors, variables } from '../../constants';
+import { NInputField } from './inputField.type';
 
-import { BoxProps } from './inputField.type';
+import { colors, variables } from '../../constants';
 
 const colorOptions = {
     default: {
@@ -107,7 +107,7 @@ const InputContainer = styled.div`
     // overflow: hidden;
 `;
 
-const Box = styled.div<BoxProps>`
+const Box = styled.div<NInputField.BoxProps>`
     display: flex;
     justify-content: center;
     align-items: center;

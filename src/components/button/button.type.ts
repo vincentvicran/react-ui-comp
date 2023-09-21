@@ -1,4 +1,4 @@
-declare namespace NButton {
+export declare namespace NButton {
     interface ButtonProps extends React.ButtonHTMLAttributes<any> {
         title?: string;
         style?: React.CSSProperties;

@@ -1,4 +1,4 @@
-declare namespace NAccordion {
+export declare namespace NAccordion {
     interface AccordionProps {
         children?: React.ReactNode;
         accordionList: Array<AccordionItems>;

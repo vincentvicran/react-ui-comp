@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { getLightDarkColor } from '../../utils';
+
+import { getLightDarkColor } from 'utils';
 
 const ContainerStyled = styled.div<{ itemScope: boolean }>`
     position: fixed;

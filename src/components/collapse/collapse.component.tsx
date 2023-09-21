@@ -7,8 +7,9 @@ import {
     useAnimatedValue,
     AnimatedBlock,
 } from 'react-ui-animate';
+import { NCollapse } from './collapse.type';
 
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward } from 'components/icons';
 
 import {
     CollapseContainer,
@@ -19,7 +20,6 @@ import {
     CollapseHeaderContent,
     CollapseBodyContent,
 } from './collapse.styled';
-import { CollapseProps, CollapseItemProps, CustomCollapseItemProps } from './collapse.type';
 
 const CollapseContentAnimated = makeAnimatedComponent(CollapseContent);
 const CollapseHeaderAnimated = makeAnimatedComponent(CollapseHeader);
@@ -35,7 +35,7 @@ export const CollapseItem = ({
     itemHeight,
     iconVisible,
     triggerToggle = true,
-}: CollapseItemProps) => {
+}: NCollapse.CollapseItemProps) => {
     const [open, setOpen] = useState(false);
 
     const [height, setHeight] = useState<any>(0);
@@ -110,7 +110,7 @@ export const Collapse = ({
     trigger,
     triggerToggle = true,
     iconVisible = false,
-}: CollapseProps) => {
+}: NCollapse.CollapseProps) => {
     return (
         <>
             <CollapseContainer style={style}>
@@ -158,7 +158,7 @@ export const CustomCollapseItem = ({
     itemHeight,
     iconVisible,
     triggerToggle = true,
-}: CustomCollapseItemProps) => {
+}: NCollapse.CustomCollapseItemProps) => {
     const [open, setOpen] = useState(false);
 
     const [height, setHeight] = useState<any>(0);

@@ -1,4 +1,4 @@
-declare namespace NLoader {
+export declare namespace NLoader {
     interface LoaderProps {
         children?: React.ReactNode;
         variant?: VariantType;

@@ -1,4 +1,4 @@
-declare namespace NToast {
+export declare namespace NToast {
     type ToastType = 'success' | 'error' | 'info' | 'warning';
     type ToastArg = { message?: string; type: ToastType; subMsg?: string };
 

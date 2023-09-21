@@ -1,7 +1,7 @@
 import Select, { StylesConfig } from 'react-select';
 import { InputContainer, Label } from './select.styled';
 import { colors, variables } from '../../constants';
-import { SelectFieldProps } from './select.type';
+import { NSelectField } from './select.type';
 
 const colorOptions = {
     default: {
@@ -116,7 +116,7 @@ export const SelectField = ({
     isMulti,
     isLoading,
     color = 'infoFill',
-}: SelectFieldProps) => {
+}: NSelectField.SelectFieldProps) => {
     // type ControlType = typeof options;
     const basicStyles: StylesConfig = {
         container: (styles) => ({
