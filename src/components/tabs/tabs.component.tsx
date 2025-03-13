@@ -1,7 +1,9 @@
 import { ReactChild, ReactFragment, useCallback, useEffect, useState } from 'react';
-import { getListOfAttribute, getNewChild } from '../../utils';
+import { NTabs } from './tabs.type';
+
+import { getListOfAttribute, getNewChild } from 'utils';
+
 import { TabBodyStyled, TabHeadersStyled, TabPaneStyled, TabsStyled } from './tabs.styled';
-import { TabPanePropsType, TabPropsType } from './tabs.type';
 
 const TabHeaders = ({ headers, setActiveTabHeader }: any) => {
     return (
@@ -19,7 +21,7 @@ const TabBody = ({ childPane }: any) => {
     return <TabBodyStyled>{childPane}</TabBodyStyled>;
 };
 
-export const Tabs = ({ children, trigger, activeId, onTabChange }: TabPropsType) => {
+export const Tabs = ({ children, trigger, activeId, onTabChange }: NTabs.TabPropsType) => {
     const [headers, setHeaders] = useState<Array<object>>();
 
     // const [activeTabHeader, setActiveTabHeader] = useState<string>('');
@@ -77,7 +79,7 @@ export const Tabs = ({ children, trigger, activeId, onTabChange }: TabPropsType)
     );
 };
 
-const Pane = ({ children }: TabPanePropsType) => {
+const Pane = ({ children }: NTabs.TabPanePropsType) => {
     return <TabPaneStyled>{children}</TabPaneStyled>;
 };
 

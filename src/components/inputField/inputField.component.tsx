@@ -1,8 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineSearch } from 'react-icons/ai';
-import { TiBackspace } from 'react-icons/ti';
-// import { GiBeveledStar } from 'react-icons/gi';
-import { FaStarOfLife } from 'react-icons/fa';
+import React, { useState, useMemo, useEffect, forwardRef } from 'react';
+import { makeAnimatedComponent, useAnimatedValue, AnimationConfigUtils, interpolate } from 'react-ui-animate';
+import { NInputField } from './inputField.type';
 
 import {
     InputContainer,
@@ -15,15 +13,16 @@ import {
     RequiredSign,
     Loader,
 } from './inputField.styled';
-import { InputFieldProps, SearchFieldProps, TextAreaProps } from './inputField.type';
-
-import { makeAnimatedComponent, useAnimatedValue, AnimationConfigUtils, interpolate } from 'react-ui-animate';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineSearch, FaStarOfLife, TiBackspace } from 'components/icons';
 
 const InputLengthAnimated = makeAnimatedComponent(InputLength);
 const BoxAnimated = makeAnimatedComponent(Box);
 const RequiredSignAnimated = makeAnimatedComponent(RequiredSign);
 
-export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>((props, ref) => {
+export const InputField: React.FC<NInputField.InputFieldProps> = forwardRef<
+    HTMLInputElement,
+    NInputField.InputFieldProps
+>((props, ref) => {
     let {
         label,
         labelStyle,
@@ -80,7 +79,7 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>((p
 
     //* checks input length with respect to maxlength
     useEffect(() => {
-        const lengthss = value!.length | 0;
+        const lengthss = value ? String(value)?.length : 0;
         setInputLength(lengthss);
         inputLength === lengths?.maxLength && (translateX.value = 4);
 
@@ -192,7 +191,10 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>((p
     );
 });
 
-export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref) => {
+export const TextArea: React.FC<NInputField.TextAreaProps> = React.forwardRef<
+    HTMLTextAreaElement,
+    NInputField.TextAreaProps
+>((props, ref) => {
     const {
         name,
         label,
@@ -231,7 +233,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((pr
 
     //* checks input length with respect to maxlength
     useEffect(() => {
-        const lengths = value!.length | 0;
+        const lengths = value ? String(value)?.length : 0;
         setInputLength(lengths);
         inputLength === maxLength && (translateX.value = 4);
 
@@ -320,7 +322,10 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((pr
     );
 });
 
-export const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>((props, ref) => {
+export const SearchField: React.FC<NInputField.SearchFieldProps> = React.forwardRef<
+    HTMLInputElement,
+    NInputField.SearchFieldProps
+>((props, ref) => {
     let {
         label,
 
@@ -372,7 +377,7 @@ export const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
 
     //* checks input length with respect to maxlength
     useEffect(() => {
-        const lengthss = value!.length | 0;
+        const lengthss = value ? String(value)?.length : 0;
         setInputLength(lengthss);
         inputLength === lengths?.maxLength && (translateX.value = 4);
 

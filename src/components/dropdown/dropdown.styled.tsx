@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DropdownMenuItem } from './dropdown.type';
+import { NDropdown } from './dropdown.type';
 
 const MenuStyled = styled.div`
     padding: 8px 0;
@@ -15,7 +15,7 @@ const MenuStyled = styled.div`
     min-width: 120px;
     background: #ffffff;
 `;
-const MenuItemStyled = styled.div<DropdownMenuItem>`
+const MenuItemStyled = styled.div<NDropdown.DropdownMenuItem>`
     display: flex;
     justify-content: start;
     align-items: center;

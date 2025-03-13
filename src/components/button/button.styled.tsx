@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import { NButton } from './button.type';
+
 import { colors, fonts } from '../../constants';
 
 const { colorOptions, variantOptions } = colors;

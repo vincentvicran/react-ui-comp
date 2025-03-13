@@ -1,4 +1,5 @@
 import { Sprinter1, Sprinter2, Sprinter3, Sprinter } from './threeDots.styled';
+import { NLoader } from '../../loader.type';
 
 export const ThreeDotsLoader = (props: NLoader.DotsProps) => {
     return (
